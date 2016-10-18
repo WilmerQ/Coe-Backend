@@ -6,7 +6,7 @@ package co.edu.ucc.coe.clases;
  */
 public class CredencialesLoguin {
 
-    private String Nombre;
+    private String nombre;
     private String contrasena;
 
     public String getContrasena() {
@@ -18,10 +18,12 @@ public class CredencialesLoguin {
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        Nombre = nombre;
+        this.nombre = nombre;
     }
+
+    
 }

@@ -53,8 +53,8 @@ public class UsuarioResource {
 
     @GET
     @Produces("application/json")
-    @Path("/{id}")
-    public String getUsuarioLogin(@PathParam("id") String id) {
+    @Path("/{id}/{dos}")
+    public String getUsuarioLogin(@PathParam("id") String id,@PathParam("dos") String dos) {
        
         Gson gson = new Gson();
         CredencialesLoguin cl = gson.fromJson(id, CredencialesLoguin.class);

@@ -17,13 +17,12 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class LogicaLoguin {
-    
+
     @PersistenceContext(unitName = "COEPU")
     private EntityManager em;
-    
+
     public Usuario login(String nombreUsuario, String passwordPlano) {
-       try {
-            //String encPassword = Md5.getEncoddedString(passwordPlano);
+        try {
             return (Usuario) em.createQuery("Select u from Usuario u where u.nombreUsuario = :n and u.contrasena = :p")
                     .setParameter("n", nombreUsuario)
                     .setParameter("p", passwordPlano).getSingleResult();
