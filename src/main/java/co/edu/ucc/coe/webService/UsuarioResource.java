@@ -10,6 +10,7 @@ import co.edu.ucc.coe.clases.CredencialesLoguin;
 import co.edu.ucc.coe.model.Usuario;
 import co.edu.ucc.coe.service.CommonsBean;
 import co.edu.ucc.coe.service.LogicaLoguin;
+import co.edu.ucc.coe.webService.base.ResponseMessenger;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,6 +27,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * REST Web Service
@@ -54,8 +56,8 @@ public class UsuarioResource {
     @GET
     @Produces("application/json")
     @Path("/{id}/{dos}")
-    public String getUsuarioLogin(@PathParam("id") String id,@PathParam("dos") String dos) {
-       
+    public String getUsuarioLogin(@PathParam("id") String id, @PathParam("dos") String dos) {
+
         Gson gson = new Gson();
         CredencialesLoguin cl = gson.fromJson(id, CredencialesLoguin.class);
         Gson g = new GsonBuilder().setExclusionStrategies(new GsonExcludeListStrategy()).setPrettyPrinting().create();
@@ -82,13 +84,22 @@ public class UsuarioResource {
         }
     }
 
-    /**
-     * PUT method for updating or creating an instance of UsuarioResource
-     *
-     * @param content representation for the resource
-     */
-    @PUT
+    @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
+    @Path("/{usuario}")
+    public Response exampleResponse(@PathParam("usuario") String usuario) {
+        try {
+            Gson gson = new Gson();
+            CredencialesLoguin cl = gson.fromJson(usuario, CredencialesLoguin.class);
+            Usuario u = ll.login(cl.getNombre(), cl.getContrasena());
+            if (u != null) {
+                Gson g = new GsonBuilder().setExclusionStrategies(new GsonExcludeListStrategy()).setPrettyPrinting().create();
+                return new ResponseMessenger().getResponseOk(g.toJson(usuario));
+            } else {
+                return new ResponseMessenger().getResponseError("USUARIO Y/O CONTRASEÑA INCORRECTO");
+            }
+        } catch (Exception e) {
+            return new ResponseMessenger().getResponseError("ERROR INTERNO DEL SERVIDOR");
+        }
     }
 }
