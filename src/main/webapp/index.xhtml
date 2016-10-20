@@ -33,7 +33,7 @@ and open the template in the editor.
         <!-- Custom Theme Style -->
         <link href="css/build/css/custom.min.css" rel="stylesheet"/>
 
-
+        <ui:include src="css/templates/growl.xhtml" />
     </h:head>
 
     <body class="login">
@@ -45,17 +45,18 @@ and open the template in the editor.
                 <div class="animate form login_form">
 
                     <section class="login_content">
-                        <h:form>
+                        <h:form id="form">
+                            <p:growl id="growl" showDetail="true" />
                             <h1>Iniciar sesión</h1>
                             <div>
-                                <p:inputText type="text" styleClass="form-control" placeholder="Nombre Usuario" style="width: 100%"/>
+                                <p:inputText type="text" styleClass="form-control" placeholder="Nombre Usuario" value="#{mbLoguin.nombreDeUsuaio}" style="width: 100%"/>
                             </div>
                             <div>
-                                <p:inputText type="password" styleClass="form-control" placeholder="Contraseña" style="width: 100%"/>
+                                <p:inputText type="password" styleClass="form-control" placeholder="Contraseña" value="#{mbLoguin.password}" style="width: 100%"/>
                             </div>
                             <div>
-                                <a class="btn btn-default submit" href="index.xhtml">Entrar</a>
-                                <a class="reset_pass" href="#">Olvidaste tu contraseña?</a>
+                                <p:commandButton  value="Entrar"  update=":form growl-total" actionListener="#{mbLoguin.accionLogin()}" styleClass="btn btn-default submit" />    
+                                <a class="reset_pass" href="olvidocontrasena.xhtml">Olvidaste tu contraseña?</a>
                             </div>
 
                             <div class="clearfix"></div>
@@ -74,10 +75,10 @@ and open the template in the editor.
 
                 <div id="register" class="animate form registration_form">
                     <section class="login_content">
-                        <form>
+                        <h:form>
                             <h1>creación de cuenta</h1>
                             <div>
-                                <input type="text" class="form-control" placeholder="Username" required="" />
+                                <p:inputText type="text" styleClass="form-control" placeholder="Nombre Usuario"  style="width: 100% "/>
                             </div>
                             <div>
                                 <input type="email" class="form-control" placeholder="Email" required="" />
@@ -99,7 +100,7 @@ and open the template in the editor.
                                 <div class="clearfix"></div>
                                 <br />
                             </div>
-                        </form>
+                        </h:form>
                     </section>
                 </div>
             </div>
