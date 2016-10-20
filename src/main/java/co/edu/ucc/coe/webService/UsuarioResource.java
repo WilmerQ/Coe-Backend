@@ -94,12 +94,12 @@ public class UsuarioResource {
             Usuario u = ll.login(cl.getNombre(), cl.getContrasena());
             if (u != null) {
                 Gson g = new GsonBuilder().setExclusionStrategies(new GsonExcludeListStrategy()).setPrettyPrinting().create();
-                return new ResponseMessenger().getResponseOk(g.toJson(usuario));
+                return new ResponseMessenger().getResponseOk(g.toJson(u));
             } else {
-                return new ResponseMessenger().getResponseError("USUARIO Y/O CONTRASEÑA INCORRECTO");
+                return new ResponseMessenger().getResponseError("Usuario y/o Contraseña incorrecto");
             }
         } catch (Exception e) {
-            return new ResponseMessenger().getResponseError("ERROR INTERNO DEL SERVIDOR");
+            return new ResponseMessenger().getResponseError("Problema interno del servidor");
         }
     }
 }

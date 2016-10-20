@@ -1,31 +1,108 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        <h:form role="form" id="form">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:outputLabel style="width: 100%" value="Nombre de roll" />
-                <p:inputText style="width: 100%" value="#{MbRoll.roll.nombre}" />
-            </h:panelGrid> 
-            <p:commandButton  value="Registrar"  update=":form" actionListener="#{MbRoll.accionGuarda()}" styleClass="ui-priority-primary" />  
-            <br/>
-            <p:dataTable value="#{MbRoll.roles}"  var="row" paginator="true" rows="5" paginatorPosition="bottom" >
-                <p:column headerText="Id">
-                    <p:outputLabel value="#{row.id}" />
-                </p:column>
-                <p:column headerText="Nombre">
-                    <p:outputLabel value="#{row.nombre}" />
-                </p:column>
-                <p:column>
-                    <p:commandLink value="EDITAR"  action="#{MbRoll.cargaRoll(row)}" update=":form"/>
-                </p:column>
-            </p:dataTable> 
-        </h:form>
-    </h:body>
-</html>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      lang="es">
 
+    <h:head>
+
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+        <title>Centro de Operaciones de Emergencias Coe</title>
+
+        <!-- Bootstrap -->
+        <link href="css/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <!-- Font Awesome -->
+        <link href="css/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+        <!-- NProgress -->
+        <link href="css/vendors/nprogress/nprogress.css" rel="stylesheet"/>
+        <!-- Animate.css -->
+        <link href="css/vendors/animate.css/animate.min.css" rel="stylesheet"/>
+
+        <!-- Custom Theme Style -->
+        <link href="css/build/css/custom.min.css" rel="stylesheet"/>
+
+
+    </h:head>
+
+    <body class="login">
+        <div>
+            <a class="hiddenanchor" id="signup"></a>
+            <a class="hiddenanchor" id="signin"></a>
+
+            <div class="login_wrapper">
+                <div class="animate form login_form">
+
+                    <section class="login_content">
+                        <h:form>
+                            <h1>Iniciar sesión</h1>
+                            <div>
+                                <p:inputText type="text" styleClass="form-control" placeholder="Nombre Usuario" style="width: 100%"/>
+                            </div>
+                            <div>
+                                <p:inputText type="password" styleClass="form-control" placeholder="Contraseña" style="width: 100%"/>
+                            </div>
+                            <div>
+                                <a class="btn btn-default submit" href="index.xhtml">Entrar</a>
+                                <a class="reset_pass" href="#">Olvidaste tu contraseña?</a>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class="separator">
+                                <p class="change_link">Nuevo en el sitio?
+                                    <a href="#signup" class="to_register"> Crear Cuenta </a>
+                                </p>
+
+                                <div class="clearfix"></div>
+                                <br />
+                            </div>
+                        </h:form>
+                    </section>
+                </div>
+
+                <div id="register" class="animate form registration_form">
+                    <section class="login_content">
+                        <form>
+                            <h1>creación de cuenta</h1>
+                            <div>
+                                <input type="text" class="form-control" placeholder="Username" required="" />
+                            </div>
+                            <div>
+                                <input type="email" class="form-control" placeholder="Email" required="" />
+                            </div>
+                            <div>
+                                <input type="password" class="form-control" placeholder="Password" required="" />
+                            </div>
+                            <div>
+                                <a class="btn btn-default submit" href="index.html">Enviar</a>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class="separator">
+                                <p class="change_link">Already a member ?
+                                    <a href="#signin" class="to_register"> Log in </a>
+                                </p>
+
+                                <div class="clearfix"></div>
+                                <br />
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
