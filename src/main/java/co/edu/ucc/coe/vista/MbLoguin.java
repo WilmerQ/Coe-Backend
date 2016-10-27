@@ -11,7 +11,6 @@ import co.edu.ucc.coe.model.Usuario;
 import co.edu.ucc.coe.service.LogicaLoguin;
 import java.io.IOException;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -19,6 +18,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
+
 
 /**
  *
@@ -51,6 +52,7 @@ public class MbLoguin implements Serializable {
             usuario = new Usuario();
             autenticado = Boolean.FALSE;
             isusuario = Boolean.FALSE;
+            isadmin = Boolean.FALSE;
             SessionOperations.setSessionValue("USER", Boolean.FALSE);
         } else {
             autenticado = Boolean.TRUE;
@@ -67,16 +69,27 @@ public class MbLoguin implements Serializable {
         Usuario u = logicaLoguin.login(nombreDeUsuaio, Md5.getEncoddedString(password));
         SessionOperations.setSessionValue("USER", Boolean.FALSE);
         if (u != null) {
+            String url;
             usuario = u;
             autenticado = true;
-            isusuario = true;
-            SessionOperations.setSessionValue("USER", Boolean.TRUE);
+            if (u.getNombreUsuario().equals("Administrador")) {
+                isadmin = true;
+                SessionOperations.setSessionValue("ADMIN", Boolean.TRUE);
+                SessionOperations.setSessionValue("USER", Boolean.FALSE);
+                System.out.println("logueo admin");
+                url = "admin/index.xhtml";
+            } else {
+                isusuario = true;
+                SessionOperations.setSessionValue("USER", Boolean.TRUE);
+                SessionOperations.setSessionValue("ADMIN", Boolean.FALSE);
+                System.out.println("logueo user");
+                url = "usuario/index.xhtml";
+            }
             SessionOperations.setSessionValue("USUARIO", usuario);
-            //mostrarMensaje(FacesMessage.SEVERITY_INFO, u.getNombreUsuario(), "Bienvenido");
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, u.getNombreUsuario(), "Bienvenido"));
-            redirect("usuario/index.xhtml");
+            redirect(url);
         } else {
-            
+
         }
         return null;
     }
@@ -109,6 +122,14 @@ public class MbLoguin implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

@@ -6,13 +6,14 @@
 package co.edu.ucc.coe.vista;
 
 import co.edu.ucc.coe.model.Roll;
-import co.edu.ucc.coe.service.LogicaRoll;
+import co.edu.ucc.coe.service.CommonsBean;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 
 /**
  *
@@ -26,7 +27,7 @@ public class MbRoll implements Serializable {
     private List<Roll> roles;
 
     @EJB
-    private LogicaRoll lr;
+    private CommonsBean cb;
 
     /**
      * Creates a new instance of MbRoll
@@ -37,16 +38,22 @@ public class MbRoll implements Serializable {
     @PostConstruct
     public void init() {
         roll = new Roll();
-        roles = lr.getRolles();
+        roles = new ArrayList<>();
+        roles = cb.getAll(Roll.class);
     }
 
     public void accionGuarda() {
-        lr.guardar(roll);
+        System.out.println("antes de guardar:" + roll.getId());
+        System.out.println("----------" + roll.getEstado());
+        cb.guardar(roll);
         init();
+
     }
-    
-    public void cargaRoll(Roll row){
+
+    public void cargaRoll(Roll row) {
+        System.out.println("cargar roll" + row.getId());
         roll = row;
+        System.out.println("asignando el roll " + roll.getId());
     }
 
     public Roll getRoll() {
@@ -64,6 +71,5 @@ public class MbRoll implements Serializable {
     public void setRoles(List<Roll> roles) {
         this.roles = roles;
     }
-    
-    
+
 }

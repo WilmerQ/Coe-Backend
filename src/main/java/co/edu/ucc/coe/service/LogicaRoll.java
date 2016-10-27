@@ -26,8 +26,10 @@ public class LogicaRoll {
     public boolean guardar(Roll f) {
         try {
             if (f.getId() == null) {
+                System.out.println("guardar");
                 em.persist(f);
             } else {
+                System.out.println("actualizar");
                 em.merge(f);
             }
             return true;
