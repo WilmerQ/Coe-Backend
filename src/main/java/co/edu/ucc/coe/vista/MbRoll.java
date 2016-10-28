@@ -13,17 +13,17 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
- * @author Alvaro Padilla
+ * @author Wilmer
  */
 @ViewScoped
 @ManagedBean(name = "MbRoll")
 public class MbRoll implements Serializable {
 
-    private Roll roll;
+    Roll roll;
     private List<Roll> roles;
 
     @EJB
@@ -43,17 +43,12 @@ public class MbRoll implements Serializable {
     }
 
     public void accionGuarda() {
-        System.out.println("antes de guardar:" + roll.getId());
-        System.out.println("----------" + roll.getEstado());
         cb.guardar(roll);
         init();
-
     }
 
     public void cargaRoll(Roll row) {
-        System.out.println("cargar roll" + row.getId());
-        roll = row;
-        System.out.println("asignando el roll " + roll.getId());
+        this.roll = row;
     }
 
     public Roll getRoll() {
