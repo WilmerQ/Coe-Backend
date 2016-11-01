@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -43,8 +45,12 @@ public class MbRoll implements Serializable {
     }
 
     public void accionGuarda() {
-        cb.guardar(roll);
-        init();
+        if (cb.guardar(roll)) {
+            mostrarMensaje(FacesMessage.SEVERITY_INFO, "Exitoso", "Se ha Guardado el Roll");
+            init();
+        } else {
+            mostrarMensaje(FacesMessage.SEVERITY_FATAL, "Error", "Ha fallado al Guardar el Roll");
+        }
     }
 
     public void cargaRoll(Roll row) {
@@ -65,6 +71,11 @@ public class MbRoll implements Serializable {
 
     public void setRoles(List<Roll> roles) {
         this.roles = roles;
+    }
+
+    public void mostrarMensaje(FacesMessage.Severity icono, String titulo, String mensaje) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(icono, titulo, mensaje));
     }
 
 }

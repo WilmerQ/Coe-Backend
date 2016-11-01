@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -25,6 +26,26 @@
                     <p:commandLink value="EDITAR"  action="#{MbRoll.cargaRoll(row)}" update=":form"/>
                 </p:column>
             </p:dataTable> 
+
+            <p:selectCheckboxMenu id="menu" value="#{mbPermisos.id}" label="Cities"
+                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                <f:selectItems value="#{mbPermisos.listaUsuarioSelect}" />
+            </p:selectCheckboxMenu>
+
+            <p:selectOneMenu   filter="true"  filterMatchMode="contains"  value="#{mbPermisos.id}" style="width: 100%"  panelStyleClass="combo">
+                <f:selectItem itemLabel="Seleccione Tipo de sensor" itemValue="" noSelectionOption="true" />
+                <f:selectItems value="#{mbPermisos.listaUsuarioSelect}"/>     
+
+            </p:selectOneMenu>
+
+            <p:selectCheckboxMenu id="menupersonas"  label="Usuarios" filter="true"
+                                  filterMatchMode="startsWith" style="width: 150px">
+                <f:selectItems value="#{mbPermisos.listaUsuarioSelect}"/>
+            </p:selectCheckboxMenu>
+
+           
+
+
         </h:form>
     </h:body>
 </html>

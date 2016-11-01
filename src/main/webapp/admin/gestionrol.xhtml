@@ -14,7 +14,6 @@
         <div class="container body">
             <div class="main_container">
                 <ui:include src="../css/templates/base.xhtml"/>
-
                 <!-- page content -->
                 <div class="right_col" role="main">
                     <div class="page-title" align="center">
@@ -43,15 +42,14 @@
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nombre:<span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <p:inputText id="camponombre" type="text" styleClass="form-control col-md-7 col-xs-12" required="true" value="#{MbRoll.roll.nombre}"/>
+                                                <p:inputText id="camponombre" type="text" styleClass="form-control col-md-7 col-xs-12" required="true" value="#{MbRoll.roll.nombre}" requiredMessage="Ingrese Nombre Roll"/>
                                                 <!--<input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12"/>-->
                                             </div>
                                         </div>
                                         <div class="ln_solid"></div>
                                         <div class="form-group" align="center">
                                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                <p:commandButton  value="Guardar" update=":form2 :tablaroles" styleClass="btn btn-success" actionListener="#{MbRoll.accionGuarda()}" />    
-                                                <!--<button type="submit" class="btn btn-success">Guardar</button>-->
+                                                <p:commandButton  value="Guardar" update=":form2 :tablaroles growl-total" styleClass="btn btn-success" actionListener="#{MbRoll.accionGuarda()}" />    
                                             </div>
                                         </div>
                                     </h:form>
@@ -77,15 +75,15 @@
                                     <h:form role="demo-form3" id="demo-form3" prependId="false" class="form-horizontal form-label-left">
                                         <div class="form-group" align="center">
                                             <p:dataTable id="tablaroles" value="#{MbRoll.roles}"  var="row" paginator="true" rows="10" paginatorPosition="bottom" >
-                                                <p:column headerText="Id">
+                                                <p:column headerText="Id" style="width: 60px">
                                                     <p:outputLabel value="#{row.id}" />
                                                 </p:column>
                                                 <p:column headerText="Nombre">
                                                     <p:outputLabel value="#{row.nombre}" />
                                                 </p:column>
-                                                <p:column>
-                                                    <p:commandLink action="#{MbRoll.cargaRoll(row)}" update=":form2:camponombre">
-                                                        <span class="fa fa-edit"></span>
+                                                <p:column style="width: 100px">
+                                                    <p:commandLink id="editar" action="#{MbRoll.cargaRoll(row)}" update=":form2:camponombre">
+                                                        <span class="fa fa-edit"/>
                                                     </p:commandLink>
                                                 </p:column>
                                             </p:dataTable> 

@@ -8,6 +8,7 @@ package co.edu.ucc.coe.model;
 import co.edu.ucc.coe.base.CamposComunesdeEntidad;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 /**
@@ -23,6 +24,8 @@ public class Usuario extends CamposComunesdeEntidad implements Serializable {
     private String telefono;
     @Transient
     private Integer informeDeError;
+    @ManyToOne
+    private Roll rollUsuario;
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -62,6 +65,14 @@ public class Usuario extends CamposComunesdeEntidad implements Serializable {
 
     public void setInformeDeError(Integer informeDeError) {
         this.informeDeError = informeDeError;
+    }
+
+    public Roll getRollUsuario() {
+        return rollUsuario;
+    }
+
+    public void setRollUsuario(Roll rollUsuario) {
+        this.rollUsuario = rollUsuario;
     }
 
 }
