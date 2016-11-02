@@ -7,6 +7,7 @@ package co.edu.ucc.coe.vista;
 
 import co.edu.ucc.coe.model.Roll;
 import co.edu.ucc.coe.service.CommonsBean;
+import co.edu.ucc.coe.service.LogicaVista;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,9 @@ public class MbRoll implements Serializable {
 
     @EJB
     private CommonsBean cb;
+    
+    @EJB
+    private LogicaVista lv;
 
     /**
      * Creates a new instance of MbRoll
@@ -42,6 +46,7 @@ public class MbRoll implements Serializable {
         roll = new Roll();
         roles = new ArrayList<>();
         roles = cb.getAll(Roll.class);
+        lv.ingresarVistas();
     }
 
     public void accionGuarda() {

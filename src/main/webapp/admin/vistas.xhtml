@@ -5,7 +5,8 @@
       lang="en"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <ui:include src="../css/templates/head_config.xhtml"/>
         <title>Centro De Operaciones COE</title>
@@ -20,27 +21,66 @@
                 <div class="right_col" role="main">
                     <div class="page-title" align="center">
                         <div class="title">
-                            <h3>Asignar Vistas al Roll</h3>
+                            <h3>Asignar Vistas</h3>
                         </div>
                     </div>
                     <br/>
                     <br/>
                     <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
 
-                </div>
-
-
-                    <!-- footer content -->
-                    <footer>
-                        <div class="pull-right">
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <br />
+                                    <h:form role="form2" prependId="false" id="form2" class="form-horizontal form-label-left">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Roll: <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <h:selectOneMenu value="#{MbVista.idRoll}" styleClass="form-control" required="true" requiredMessage="Se Debe Selecionar Roll">
+                                                    <f:selectItem itemLabel="Seleccione Roll" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{MbVista.listaRollSelect}"/>
+                                                    <f:ajax event="change" listener="#{MbVista.cargarvistas()}"  render="form2" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Vistas: <span class="required">*</span>
+                                            </label>
+                                            <h:panelGrid columns="1">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <c:forEach var="row"  items="#{MbVista.vistaActivas}">
+                                                        <p:selectBooleanCheckbox value="#{row.activa}" itemLabel="#{row.nombre}"/>
+                                                    </c:forEach>
+                                                </div>
+                                            </h:panelGrid>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
                         </div>
-                        <div class="clearfix"></div>
-                    </footer>
-                    <!-- /footer content -->
+                    </div>
                 </div>
-            </div>
 
-            <ui:include src="../css/templates/footer_scripts.xhtml"/>
+
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+        </div>
+
+        <ui:include src="../css/templates/footer_scripts.xhtml"/>
 
     </h:body>
 </html>
