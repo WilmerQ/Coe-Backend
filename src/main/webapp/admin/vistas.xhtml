@@ -52,15 +52,25 @@
                                                 </h:selectOneMenu>
                                             </div>
                                             <div class="clearfix"></div>
+                                            <br/>
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Vistas: <span class="required">*</span>
                                             </label>
                                             <h:panelGrid columns="1">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <c:forEach var="row"  items="#{MbVista.vistaActivas}">
-                                                        <p:selectBooleanCheckbox value="#{row.activa}" itemLabel="#{row.nombre}"/>
+                                                        <h:panelGrid columns="2">
+                                                            <p:selectBooleanCheckbox value="#{row.activa}"/>
+                                                            <p:outputLabel value="#{row.nombre}"/>
+                                                        </h:panelGrid>
                                                     </c:forEach>
                                                 </div>
                                             </h:panelGrid>
+                                            
+                                            <div class="form-group" align="center">
+                                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                    <p:commandButton  value="Guardar" update="growl-total" styleClass="btn btn-success" actionListener="#{MbVista.accionGuardar}" />    
+                                                </div>
+                                            </div>
                                         </div>
                                     </h:form>
                                 </div>

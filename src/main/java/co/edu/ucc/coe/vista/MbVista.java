@@ -103,6 +103,10 @@ public class MbVista implements Serializable {
         this.vistaActivas = activasTemp1;
 
     }
+    
+    public void AccionGuardar(){
+        
+    }
 
     public Boolean getPrueba() {
         return prueba;
