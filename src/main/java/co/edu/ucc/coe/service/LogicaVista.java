@@ -53,16 +53,25 @@ public class LogicaVista {
         return em.createQuery("SELECT r FROM Vista r").getResultList();
     }
 
-    public List<VistaActiva> getvistas(Long idRoll) {
+    public Boolean getvistas(Long idRoll,String nombre) {
         List<VistaActiva> vistaActivas = new ArrayList<>();
-        List<VistasXRoll> vistasXRolls = em.createQuery("SELECT r FROM VistasXRoll r WHERE r.roll.id= :i").setParameter("i", idRoll).getResultList();
+        List<VistasXRoll> vistasXRolls = em.createQuery("SELECT r FROM VistasXRoll r WHERE r.roll.id= :i AND r.vista.nombre= :n").setParameter("i", idRoll).setParameter("n", nombre).getResultList();
 
         for (int i = 0; i < vistasXRolls.size(); i++) {
             VistaActiva vistaActiva = new VistaActiva();
             vistaActiva.setActiva(Boolean.TRUE);
             vistaActiva.setNombre(vistasXRolls.get(i).getVista().getNombre());
             vistaActivas.add(vistaActiva);
+            System.out.println("-------------------------------------");
+            System.out.println("elemento:" + i);
+            System.out.println("nombre:" + vistaActiva.getNombre());
+            System.out.println("boolean:" + vistaActiva.getActiva());
         }
-        return vistaActivas;
+        
+        if(!vistasXRolls.isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

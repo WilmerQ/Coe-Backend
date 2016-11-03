@@ -54,21 +54,53 @@ public class MbVista implements Serializable {
 
     public void cargarvistas() {
         System.out.println("cargarvistas");
-        List<VistaActiva> vas = lv.getvistas(idRoll);
         List<VistaActiva> activasTemp = new ArrayList<>();
-        for (Vista listaVista : listaVistas) {
+
+        for (Vista v : listaVistas) {
+            VistaActiva vistaActiva = new VistaActiva();
+            vistaActiva.setNombre(v.getNombre());
+            activasTemp.add(vistaActiva);
+            System.out.println("lista vista: " + v.getNombre());
+        }
+        List<VistaActiva> activasTemp1 = new ArrayList<>();
+        for (VistaActiva va : activasTemp) {
+            System.out.println("if:  " + lv.getvistas(idRoll, va.getNombre()));
+
+            if (lv.getvistas(idRoll, va.getNombre())) {
+                va.setActiva(Boolean.TRUE);
+                activasTemp1.add(va);
+            } else {
+                va.setActiva(Boolean.FALSE);
+                activasTemp1.add(va);
+            }
+
+        }
+
+        /*for (Vista listaVista : listaVistas) {
+            System.out.println("listavista: " + listaVista.getNombre());
+            
             VistaActiva temp = new VistaActiva();
             temp.setNombre(listaVista.getNombre());
-            temp.setActiva(Boolean.TRUE);
-            for (VistaActiva va : vas) {
-
-                if (!vas.contains(temp)) {
-                    temp.setActiva(Boolean.FALSE);
-                    vas.add(temp);
+            
+            if (!lv.getvistas(idRoll).isEmpty()) {
+                for (VistaActiva vista : lv.getvistas(idRoll)) {
+                    System.out.println(""+lv.getvistas(idRoll).size());
+                    System.out.println("getvistas" + vista.getNombre().equals(temp.getNombre()));
+                    if (vista.getNombre().equals(temp.getNombre())) {
+                        temp.setActiva(Boolean.TRUE);
+                        activasTemp.add(temp);
+                    } else {
+                        temp.setActiva(Boolean.FALSE);
+                        activasTemp.add(temp);
+                    }
                 }
+            } else {
+                temp.setActiva(Boolean.FALSE);
+                activasTemp.add(temp);
             }
-        }
-        this.vistaActivas = activasTemp;
+
+        }*/
+        this.vistaActivas = activasTemp1;
 
     }
 
