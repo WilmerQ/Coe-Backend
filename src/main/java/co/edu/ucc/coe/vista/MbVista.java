@@ -50,22 +50,19 @@ public class MbVista implements Serializable {
         listaVistas = new ArrayList<>();
         listaVistas = lv.getVistas1();
         vistaActivas = new ArrayList<>();
+        idRoll = null;
     }
 
     public void cargarvistas() {
         System.out.println("cargarvistas");
         List<VistaActiva> activasTemp = new ArrayList<>();
-
         for (Vista v : listaVistas) {
             VistaActiva vistaActiva = new VistaActiva();
             vistaActiva.setNombre(v.getNombre());
             activasTemp.add(vistaActiva);
-            System.out.println("lista vista: " + v.getNombre());
         }
         List<VistaActiva> activasTemp1 = new ArrayList<>();
         for (VistaActiva va : activasTemp) {
-            System.out.println("if:  " + lv.getvistas(idRoll, va.getNombre()));
-
             if (lv.getvistas(idRoll, va.getNombre())) {
                 va.setActiva(Boolean.TRUE);
                 activasTemp1.add(va);
@@ -73,39 +70,23 @@ public class MbVista implements Serializable {
                 va.setActiva(Boolean.FALSE);
                 activasTemp1.add(va);
             }
-
         }
-
-        /*for (Vista listaVista : listaVistas) {
-            System.out.println("listavista: " + listaVista.getNombre());
-            
-            VistaActiva temp = new VistaActiva();
-            temp.setNombre(listaVista.getNombre());
-            
-            if (!lv.getvistas(idRoll).isEmpty()) {
-                for (VistaActiva vista : lv.getvistas(idRoll)) {
-                    System.out.println(""+lv.getvistas(idRoll).size());
-                    System.out.println("getvistas" + vista.getNombre().equals(temp.getNombre()));
-                    if (vista.getNombre().equals(temp.getNombre())) {
-                        temp.setActiva(Boolean.TRUE);
-                        activasTemp.add(temp);
-                    } else {
-                        temp.setActiva(Boolean.FALSE);
-                        activasTemp.add(temp);
-                    }
-                }
-            } else {
-                temp.setActiva(Boolean.FALSE);
-                activasTemp.add(temp);
-            }
-
-        }*/
         this.vistaActivas = activasTemp1;
-
+        System.out.println("tamaño de lista: " + vistaActivas.size());
+        for (VistaActiva va : vistaActivas) {
+            System.out.println("Describiendo la lista: " + va.getNombre());
+            System.out.println("Describiendo la lista: " + va.getActiva());
+        }
     }
-    
-    public void AccionGuardar(){
-        
+
+    public void accionGuardar() {
+        System.out.println("tamaño de lista AccionGuardar: " + vistaActivas.size());
+        for (VistaActiva va : vistaActivas) {
+            System.out.println("Describiendo la lista AccionGuardar: " + va.getNombre());
+            System.out.println("Describiendo la lista AccionGuardar: " + va.getActiva());
+        }
+        lv.guardarVistas(vistaActivas, idRoll);
+        init();
     }
 
     public Boolean getPrueba() {

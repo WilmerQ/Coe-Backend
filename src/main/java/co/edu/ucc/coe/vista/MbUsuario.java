@@ -8,7 +8,7 @@ package co.edu.ucc.coe.vista;
 import co.edu.ucc.coe.base.Md5;
 import co.edu.ucc.coe.model.Usuario;
 import co.edu.ucc.coe.service.CommonsBean;
-import co.edu.ucc.coe.service.LogicaLoguin;
+
 import java.io.IOException;
 import javax.inject.Named;
 

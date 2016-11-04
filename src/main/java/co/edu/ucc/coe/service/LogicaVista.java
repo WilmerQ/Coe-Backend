@@ -6,6 +6,7 @@
 package co.edu.ucc.coe.service;
 
 import co.edu.ucc.coe.clases.VistaActiva;
+import co.edu.ucc.coe.model.Roll;
 import co.edu.ucc.coe.model.Vista;
 import co.edu.ucc.coe.model.VistasXRoll;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class LogicaVista {
     public void ingresarVistas() {
         GuardarVista("index", "index.xhtml");
         GuardarVista("equipo", "gestionequipo.xhtml");
+        GuardarVista("mapa", "gestionequipo.xhtml");
+        GuardarVista("ejemplo", "gestionequipo.xhtml");
     }
 
     public boolean GuardarVista(String nombreVista, String rutaVista) {
@@ -53,7 +56,7 @@ public class LogicaVista {
         return em.createQuery("SELECT r FROM Vista r").getResultList();
     }
 
-    public Boolean getvistas(Long idRoll,String nombre) {
+    public Boolean getvistas(Long idRoll, String nombre) {
         List<VistaActiva> vistaActivas = new ArrayList<>();
         List<VistasXRoll> vistasXRolls = em.createQuery("SELECT r FROM VistasXRoll r WHERE r.roll.id= :i AND r.vista.nombre= :n").setParameter("i", idRoll).setParameter("n", nombre).getResultList();
 
@@ -67,11 +70,33 @@ public class LogicaVista {
             System.out.println("nombre:" + vistaActiva.getNombre());
             System.out.println("boolean:" + vistaActiva.getActiva());
         }
-        
-        if(!vistasXRolls.isEmpty()){
+
+        if (!vistasXRolls.isEmpty()) {
             return true;
-        }else {
+        } else {
             return false;
+        }
+    }
+
+    public void guardarVistas(List<VistaActiva> vistaActivas, Long idRoll) {
+        Roll r = (Roll) em.find(Roll.class, idRoll);
+        System.out.println("rol " + (Roll) em.find(Roll.class, idRoll));
+        for (VistaActiva va : vistaActivas) {
+            Vista v = (Vista) em.createQuery("SELECT v FROM Vista v WHERE v.nombre= :i").setParameter("i", va.getNombre()).getSingleResult();
+            if (va.getActiva()) {
+                if ((Long) em.createQuery("SELECT COUNT(vr) FROM VistasXRoll vr WHERE vr.roll.id= :i AND vr.vista= :v").setParameter("i", idRoll).setParameter("v", v).getSingleResult() == 0) {
+                    System.out.println("vista v: " + v.getNombre());
+                    VistasXRoll vistasXRoll = new VistasXRoll();
+                    vistasXRoll.setRoll(r);
+                    vistasXRoll.setVista(v);
+                    em.persist(vistasXRoll);
+                }
+            } else {
+                if ((Long) em.createQuery("SELECT COUNT(vr) FROM VistasXRoll vr WHERE vr.roll.id= :i AND vr.vista= :v").setParameter("i", idRoll).setParameter("v", v).getSingleResult() > 0) {
+                    System.out.println("Existe la vista a eliminar");
+                    em.createQuery("DELETE FROM VistasXRoll vr WHERE vr.roll.id= :i AND vr.vista= :v").setParameter("i", idRoll).setParameter("v", v).executeUpdate();
+                }
+            }
         }
     }
 }

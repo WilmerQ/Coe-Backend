@@ -54,6 +54,7 @@ public class UsuarioFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         Usuario usuario = (Usuario) req.getSession().getAttribute("USUARIO");
         if (usuario !=null && ((Boolean) req.getSession().getAttribute("USER"))) {
+            
             chain.doFilter(request, response);
         } else {
             req.getSession().setAttribute("NO_AUTORIZADO", Boolean.TRUE);

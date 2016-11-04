@@ -18,6 +18,7 @@ public class Vista extends CamposComunesdeEntidad implements Serializable {
 
     private String nombre;
     private String ruta;
+    private String icono;
 
     public String getNombre() {
         return nombre;
@@ -35,4 +36,12 @@ public class Vista extends CamposComunesdeEntidad implements Serializable {
         this.ruta = ruta;
     }
 
+    public String getIcono() {
+        return icono;
+    }
+
+    public void setIcono(String icono) {
+        this.icono = icono;
+    }
+    
 }

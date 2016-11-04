@@ -8,44 +8,6 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h:form role="form" id="form">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:outputLabel style="width: 100%" value="Nombre de roll" />
-                <p:inputText style="width: 100%" value="#{MbRoll.roll.nombre}" />
-            </h:panelGrid> 
-            <p:commandButton  value="Registrar"  update=":form" actionListener="#{MbRoll.accionGuarda()}" styleClass="ui-priority-primary" />  
-            <br/>
-            <p:dataTable value="#{MbRoll.roles}"  var="row" paginator="true" rows="5" paginatorPosition="bottom" >
-                <p:column headerText="Id">
-                    <p:outputLabel value="#{row.id}" />
-                </p:column>
-                <p:column headerText="Nombre">
-                    <p:outputLabel value="#{row.nombre}" />
-                </p:column>
-                <p:column  >
-                    <p:commandLink value="EDITAR"  action="#{MbRoll.cargaRoll(row)}" update=":form"/>
-                </p:column>
-            </p:dataTable> 
 
-            <p:selectCheckboxMenu id="menu" value="#{mbPermisos.id}" label="Cities"
-                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-                <f:selectItems value="#{mbPermisos.listaUsuarioSelect}" />
-            </p:selectCheckboxMenu>
-
-            <p:selectOneMenu   filter="true"  filterMatchMode="contains"  value="#{mbPermisos.id}" style="width: 100%"  panelStyleClass="combo">
-                <f:selectItem itemLabel="Seleccione Tipo de sensor" itemValue="" noSelectionOption="true" />
-                <f:selectItems value="#{mbPermisos.listaUsuarioSelect}"/>     
-
-            </p:selectOneMenu>
-
-            <p:selectCheckboxMenu id="menupersonas"  label="Usuarios" filter="true"
-                                  filterMatchMode="startsWith" style="width: 150px">
-                <f:selectItems value="#{mbPermisos.listaUsuarioSelect}"/>
-            </p:selectCheckboxMenu>
-
-           
-
-
-        </h:form>
     </h:body>
 </html>
