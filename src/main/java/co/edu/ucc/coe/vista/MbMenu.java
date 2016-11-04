@@ -5,6 +5,8 @@
  */
 package co.edu.ucc.coe.vista;
 
+import co.edu.ucc.coe.base.SessionOperations;
+import co.edu.ucc.coe.model.Usuario;
 import co.edu.ucc.coe.model.Vista;
 import co.edu.ucc.coe.service.CommonsBean;
 import co.edu.ucc.coe.service.LogicaMenu;
@@ -39,8 +41,17 @@ public class MbMenu {
     @PostConstruct
     public void init() {
         listaVistas = new ArrayList<>();
-    }
-    
-    
 
+        listaVistas = lm.getVistasMenuUsuario((Usuario) SessionOperations.getSessionValue("USUARIO"));
+    }
+
+    public List<Vista> getListaVistas() {
+        return listaVistas;
+    }
+
+    public void setListaVistas(List<Vista> listaVistas) {
+        this.listaVistas = listaVistas;
+    }
+
+    
 }
