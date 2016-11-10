@@ -11,28 +11,54 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 /**
- *
+ * Entidad utilizada para almacenar los grupos de trabajo
+ * Grupo Trabajo: es la union de una cantidad de usuarios los cuales se encuentran dirigidos por una persona
+ * la cual puede conocer la ubicacion de su personal a cargo a traves de la aplicacion movil.
  * @author wilme
+ * @see CamposComunesdeEntidad
+ * @see Serializable
  */
 @Entity
 public class EquipoTrabajo extends CamposComunesdeEntidad implements Serializable {
 
+    /**
+     * Variables String que almacena el nombre del equipo.
+     */
     private String nombreEquipo;
+    /**
+     * Objeto Usuario el cual sera designado como jefe de equipo
+     */
     @ManyToOne
     private Usuario jefeEquipo;
 
+    /**
+     * getNombreEquipo
+     * @return
+     */
     public String getNombreEquipo() {
         return nombreEquipo;
     }
 
+    /**
+     * setNombreEquipo
+     * @param nombreEquipo
+     */
     public void setNombreEquipo(String nombreEquipo) {
         this.nombreEquipo = nombreEquipo;
     }
 
+    /**
+     * getJefeEquipo
+     * @return
+     */
     public Usuario getJefeEquipo() {
         return jefeEquipo;
     }
 
+    /**
+     * setJefeEquipo
+     * @param jefeEquipo
+     */
     public void setJefeEquipo(Usuario jefeEquipo) {
         this.jefeEquipo = jefeEquipo;
     }

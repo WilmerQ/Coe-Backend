@@ -5,6 +5,7 @@
  */
 package co.edu.ucc.coe.vista;
 
+import co.edu.ucc.coe.base.DatosBasicos;
 import co.edu.ucc.coe.base.Md5;
 import co.edu.ucc.coe.base.SessionOperations;
 import co.edu.ucc.coe.model.Usuario;
@@ -19,7 +20,6 @@ import javax.faces.context.FacesContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
-
 
 /**
  *
@@ -91,6 +91,22 @@ public class MbLoguin implements Serializable {
         } else {
 
         }
+        return null;
+    }
+
+    public String accionLogout() {
+        init();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        try {
+            SessionOperations.setSessionValue("USER", Boolean.FALSE);
+            SessionOperations.setSessionValue("ADMIN", Boolean.FALSE);
+            context.getExternalContext().invalidateSession();
+        } catch (Exception e) {
+
+        }
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Salida", "Se ha cerrado la sesion correctamente"));
+        redirect(DatosBasicos.path);
         return null;
     }
 

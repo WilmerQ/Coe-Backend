@@ -5,15 +5,15 @@
  */
 package co.edu.ucc.coe.service;
 
-import co.edu.ucc.coe.base.Md5;
 import co.edu.ucc.coe.model.Usuario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
+ * EJB donde se almacenan los metodos propios para realizar el inicio de sesion de los usuarios
  * @author wilme
+ * @see Stateless
  */
 @Stateless
 public class LogicaLoguin {
@@ -21,8 +21,14 @@ public class LogicaLoguin {
     @PersistenceContext(unitName = "COEPU")
     private EntityManager em;
 
+    /**
+     * Metodo encargado de verificar las credenciales para el inicio de sesion y retorno el objeto usuario de ser validas
+     * @param nombreUsuario
+     * @param passwordPlano
+     * @return 
+     */
     public Usuario login(String nombreUsuario, String passwordPlano) {
-        if((nombreUsuario.equals("admin")) && (passwordPlano.equals("827ccb0eea8a706c4c34a16891f84e7b"))){
+        if ((nombreUsuario.equals("admin")) && (passwordPlano.equals("827ccb0eea8a706c4c34a16891f84e7b"))) {
             Usuario usuario = new Usuario();
             usuario.setNombreUsuario("Administrador");
             return usuario;
@@ -36,6 +42,4 @@ public class LogicaLoguin {
         }
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }

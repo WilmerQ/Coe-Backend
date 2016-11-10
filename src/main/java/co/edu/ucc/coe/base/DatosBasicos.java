@@ -10,12 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  *
- * @author Windows 8.1
+ * @author Windows 8.1 Clase encargada de obtener los datos de conexion en
+ * momentos de ejecucion del proyecto
  */
 public class DatosBasicos {
-    public static String ip = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getServerName();    
-    public static String path = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getContextPath();    
-    public static Integer port = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getLocalPort();    
-    //public static String ip = "localhost";  
-    //public static String ip = "54.165.89.80";  
+
+    /**
+     * variables utilizado para obtener la ip
+     */
+    public static String ip = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getServerName();
+    /**
+     * variable utilizada para obtener el link actual del proyecto
+     */
+    public static String path = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getContextPath();
+    /**
+     *Variable encargada de obtener el puerto del servidor donde se ejecuta el proyecto
+     */
+    public static Integer port = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getLocalPort();
 }

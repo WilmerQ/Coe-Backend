@@ -28,16 +28,17 @@ public class LogicaVista {
     private EntityManager em;
 
     public void ingresarVistas() {
-        GuardarVista("index", "index.xhtml");
-        GuardarVista("equipo", "gestionequipo.xhtml");
-        GuardarVista("mapa", "gestionequipo.xhtml");
-        GuardarVista("ejemplo", "gestionequipo.xhtml");
+        GuardarVista("index", "index.xhtml", "");
+        GuardarVista("equipo", "gestionequipo.xhtml", "");
+        GuardarVista("mapa", "gestionequipo.xhtml", "");
+        GuardarVista("ejemplo", "gestionequipo.xhtml", "");
     }
 
-    public boolean GuardarVista(String nombreVista, String rutaVista) {
+    public boolean GuardarVista(String nombreVista, String rutaVista, String icono) {
         Vista v = new Vista();
         v.setNombre(nombreVista);
         v.setRuta(rutaVista);
+        v.setIcono(icono);
         try {
             Long temp = (Long) em.createQuery("SELECT COUNT(v) FROM Vista v WHERE v.nombre= :t").setParameter("t", v.getNombre()).getSingleResult();
             System.out.println("vista temp = " + temp);

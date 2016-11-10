@@ -12,10 +12,17 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Alvaro Padilla
+ * @author Wilmer Quintero Clase encarga de codificar con el algoritmo de
+ * encriptacion md5
  */
 public class Md5 {
 
+    /**
+     * Metodo que recibe un String sin encriptar y retorna una String Encriptado
+     *
+     * @param texto
+     * @return
+     */
     public static String getEncoddedString(String texto) {
         try {
             MessageDigest digest = MessageDigest.getInstance("MD5");
@@ -30,6 +37,11 @@ public class Md5 {
         }
     }
 
+    /**
+     *Metodo que recibe un Array de byte y los convierte a Hexadecimal y los retorna
+     * @param datos
+     * @return
+     */
     private static String toHexadecimal(byte[] datos) {
         String resultado = "";
         ByteArrayInputStream input = new ByteArrayInputStream(datos);
@@ -51,13 +63,13 @@ public class Md5 {
         }
         if (ult0)//quitamos el 0 si es un caracter aislado
         {
-            resultado =
-                    resultado.substring(0, resultado.length() - 2) + resultado.charAt(resultado.length() - 1);
+            resultado
+                    = resultado.substring(0, resultado.length() - 2) + resultado.charAt(resultado.length() - 1);
         }
         return resultado;
     }
-    
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         String pas = "39004995";
         System.out.println(Md5.getEncoddedString(pas));
     }

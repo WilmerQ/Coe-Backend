@@ -19,8 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author Alvaro Padilla
+ * Class tipo filtro que captura la peticiones realizadas al dominio /admin/ y revisa si el usuario tiene acceso a esta
+ * @author Wilmer Quintero
+ * @see Filter
  */
 @WebFilter(filterName = "AdminFilter", urlPatterns = {"/admin/*"})
 public class AdminFilter implements Filter {

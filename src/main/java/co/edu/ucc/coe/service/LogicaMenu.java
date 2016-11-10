@@ -16,8 +16,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
+ * EJB encargado de la realizacion de los metodos necesarios para alimentar el
+ * menu lateral para cada usuario especifico
  *
  * @author wilme
+ * @see Stateless
+ * @see LocalBean
  */
 @Stateless
 @LocalBean
@@ -26,20 +30,22 @@ public class LogicaMenu {
     @PersistenceContext(unitName = "COEPU")
     private EntityManager em;
 
+    /**
+     *
+     * @param u
+     * @return
+     */
     public List<Vista> getVistasMenuUsuario(Usuario u) {
         try {
             List<Vista> lv = new ArrayList<>();
             List<VistasXRoll> vistasXRolls = em.createQuery("SELECT r FROM VistasXRoll r WHERE r.roll.id= :i").setParameter("i", u.getRollUsuario().getId()).getResultList();
             System.out.println("LogicaMenu: getVistasMenuUsuario----" + vistasXRolls.size());
-            for (VistasXRoll vxr : vistasXRolls){
-                lv.addAll((List<Vista>)em.createQuery("SELECT r FROM Vista r WHERE r = :i").setParameter("i", vxr.getVista()).getResultList());
+            for (VistasXRoll vxr : vistasXRolls) {
+                lv.addAll((List<Vista>) em.createQuery("SELECT r FROM Vista r WHERE r = :i").setParameter("i", vxr.getVista()).getResultList());
             }
             return lv;
         } catch (Exception e) {
             return null;
         }
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }

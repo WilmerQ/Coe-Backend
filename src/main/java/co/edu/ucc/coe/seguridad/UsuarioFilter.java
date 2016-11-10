@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Class tipo filtro que captura la peticiones realizadas al dominio /usuario/ y revisa si el usuario tiene acceso a esta
  * @author Alvaro Padilla
  */
 @WebFilter(filterName = "UsuarioFilter", urlPatterns = {"/usuario/*"})

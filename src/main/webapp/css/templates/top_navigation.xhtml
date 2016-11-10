@@ -8,7 +8,8 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition>
         <!-- top navigation -->
@@ -27,7 +28,11 @@ and open the template in the editor.
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
                                 <li><a href="javascript:;"> Modificar datos personales</a></li>
-                                
+                                <li><h:form>
+                                        <h:commandLink styleClass="fa" action="#{mbLoguin.accionLogout()}" value="Cerrar Sesion" >
+                                            <i class="fa fa-sign-out pull-right"></i>
+                                        </h:commandLink>
+                                    </h:form> </li>
                                 <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Cerrar Sesion</a></li>
                             </ul>
                         </li>

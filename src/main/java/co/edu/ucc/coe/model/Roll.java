@@ -11,18 +11,29 @@ import javax.persistence.Entity;
 
 
 /**
- *
- * @author Alvaro Padilla
+ * Entidad encargada del manejo del rol para cada usuario 
+ * un rol debe ser asignado a los nuevos usuarios por el administrador
+ * @author Wilmer Quintero
+ * @see CamposComunesdeEntidad
+ * @see Serializable
  */
 @Entity
 public class Roll extends CamposComunesdeEntidad implements Serializable {
 
     private String nombre;
 
+    /**
+     * getNombre
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * setNombre
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
