@@ -31,7 +31,7 @@ public class LogicaMenu {
     private EntityManager em;
 
     /**
-     *
+     * funcion que recibe un Objeto usuario y reliza la consulta de que vistas se encuentran activas para dicho usuario
      * @param u
      * @return
      */

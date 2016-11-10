@@ -22,7 +22,7 @@ public class LogicaLoguin {
     private EntityManager em;
 
     /**
-     * Metodo encargado de verificar las credenciales para el inicio de sesion y retorno el objeto usuario de ser validas
+     * funcion encargado de verificar las credenciales para el inicio de sesion y retorno el objeto usuario de ser validas
      * @param nombreUsuario
      * @param passwordPlano
      * @return 

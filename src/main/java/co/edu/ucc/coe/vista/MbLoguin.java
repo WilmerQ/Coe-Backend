@@ -22,8 +22,9 @@ import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 
 /**
- *
+ * JSF Managed Beam encargado  de la pantalla de Loguin y de Registro del Sitio Web
  * @author wilme
+ * @see SessionScoped
  */
 @Named(value = "mbLoguin")
 @SessionScoped
@@ -42,9 +43,17 @@ public class MbLoguin implements Serializable {
     private LogicaLoguin logicaLoguin;
 
     //Registro
+
+    /**
+     * Constructor
+     */
     public MbLoguin() {
     }
 
+    /**
+     *Metodo Init el cual se ejecuta inmediatamente despues de la creacion del Managed Beam
+     * @see PostConstruct
+     */
     @PostConstruct
     public void init() {
         usuario = (Usuario) SessionOperations.getSessionValue("USUARIO");
@@ -60,6 +69,10 @@ public class MbLoguin implements Serializable {
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     public String accionLogin() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getFlash().setKeepMessages(true);
@@ -94,6 +107,10 @@ public class MbLoguin implements Serializable {
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     public String accionLogout() {
         init();
         FacesContext context = FacesContext.getCurrentInstance();
@@ -119,31 +136,61 @@ public class MbLoguin implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param icono
+     * @param titulo
+     * @param mensaje
+     */
     public void mostrarMensaje(FacesMessage.Severity icono, String titulo, String mensaje) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(icono, titulo, mensaje));
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNombreDeUsuaio() {
         return nombreDeUsuaio;
     }
 
+    /**
+     *
+     * @param nombreDeUsuaio
+     */
     public void setNombreDeUsuaio(String nombreDeUsuaio) {
         this.nombreDeUsuaio = nombreDeUsuaio;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     *
+     * @param password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     *
+     * @return
+     */
     public Usuario getUsuario() {
         return usuario;
     }
 
+    /**
+     *
+     * @param usuario
+     */
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }

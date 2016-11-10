@@ -17,8 +17,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
+ * EJB encargado de realizar todas las operaciones que giran entorno a la gestion de vistas
  * @author wilme
+ * @see LocalBean
+ * @see LocalBean
+ * 
  */
 @Stateless
 @LocalBean
@@ -27,6 +30,9 @@ public class LogicaVista {
     @PersistenceContext(unitName = "COEPU")
     private EntityManager em;
 
+    /**
+     * metodo que permite adicionar las nuevas vistas segun se vallan creando los .Xhtml
+     */
     public void ingresarVistas() {
         GuardarVista("index", "index.xhtml", "");
         GuardarVista("equipo", "gestionequipo.xhtml", "");
@@ -34,6 +40,13 @@ public class LogicaVista {
         GuardarVista("ejemplo", "gestionequipo.xhtml", "");
     }
 
+    /**
+     * funcion encargada de guardar las nuevas vistas
+     * @param nombreVista
+     * @param rutaVista
+     * @param icono
+     * @return 
+     */
     public boolean GuardarVista(String nombreVista, String rutaVista, String icono) {
         Vista v = new Vista();
         v.setNombre(nombreVista);
@@ -53,10 +66,21 @@ public class LogicaVista {
         }
     }
 
+    /**
+     * Funcion encargada de obtener todas las vista creadas
+     * @return 
+     */
     public List<Vista> getVistas1() {
         return em.createQuery("SELECT r FROM Vista r").getResultList();
     }
 
+    /**
+     * Funcion Encargada de Obtener la VistaxRoll  Cruzando la consulta por idRoll y por el nombre de la vista
+     * lo que arroja un Boolean 
+     * @param idRoll
+     * @param nombre
+     * @return 
+     */
     public Boolean getvistas(Long idRoll, String nombre) {
         List<VistaActiva> vistaActivas = new ArrayList<>();
         List<VistasXRoll> vistasXRolls = em.createQuery("SELECT r FROM VistasXRoll r WHERE r.roll.id= :i AND r.vista.nombre= :n").setParameter("i", idRoll).setParameter("n", nombre).getResultList();
@@ -79,6 +103,11 @@ public class LogicaVista {
         }
     }
 
+    /**
+     * metodo encargado de Gestionar las Vistas por Roll
+     * @param vistaActivas
+     * @param idRoll 
+     */
     public void guardarVistas(List<VistaActiva> vistaActivas, Long idRoll) {
         Roll r = (Roll) em.find(Roll.class, idRoll);
         System.out.println("rol " + (Roll) em.find(Roll.class, idRoll));

@@ -13,8 +13,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
- * @author Alvaro Padilla
+ * EJB encargado de almacenar los metodos refenrentes al Crud da la entidad Roll
+ * @author Wilmer Quintero
+ * @see Stateless
+ * @see LocalBean
  */
 @Stateless
 @LocalBean
@@ -23,6 +25,11 @@ public class LogicaRoll {
     @PersistenceContext(unitName = "COEPU")
     private EntityManager em;
 
+    /**
+     * funcion que recibe un Objeto Roll para almacenarlo o actualizarlo
+     * @param f
+     * @return
+     */
     public boolean guardar(Roll f) {
         try {
             if (f.getId() == null) {
@@ -39,6 +46,10 @@ public class LogicaRoll {
         }
     }
 
+    /**
+     * funcion encargada de obtener todos los roll almacenados 
+     * @return
+     */
     public List<Roll> getRolles() {
         return em.createQuery("SELECT r FROM Roll r").getResultList();
     }
