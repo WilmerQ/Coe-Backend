@@ -19,8 +19,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 /**
+ * JSF Managed Beam encargado de la pantalla gesstionpermisos.xhtml aqui se
+ * asigna un roll a un usuario que no lo posea
  *
  * @author wilme
+ * @see ManagedBean
+ * @see ViewScoped
  */
 @ManagedBean(name = "mbPermisos")
 @ViewScoped
@@ -39,11 +43,18 @@ public class MbPermisos {
     private List<Usuario> usuarioXRoll;
 
     /**
-     * Creates a new instance of MbPermisos
+     * Constructor de la clase
      */
     public MbPermisos() {
     }
 
+    /**
+     * Metodo Init el cual se ejecuta inmediatamente despues de la creacion del
+     * Managed Beam en este se inicializa los objetos y variables para el
+     * Managed Beam
+     *
+     * @see PostConstruct
+     */
     @PostConstruct
     public void init() {
         usuarioXRoll = new ArrayList<>();
@@ -58,6 +69,12 @@ public class MbPermisos {
         }
     }
 
+    /**
+     * Metodo utilizado como accion para guardar el cambio realizado se obtiene
+     * un id de usuario no null y id roll no null y se realiza la asignascion y
+     * luego dicha actualizacion de la entidad.
+     *
+     */
     public void accionGuarda() {
         if ((idUsuario != null) && (idRoll != null)) {
             u = (Usuario) cb.getById(Usuario.class, idUsuario);
@@ -69,6 +86,13 @@ public class MbPermisos {
         }
     }
 
+    /**
+     * Metodo utilizado para cargar al managed Beam un Objeto tipo usuario
+     * presentado desde un data table en el Xhtml, recibe como parametro un row
+     * de la datable que es un objeto Usuario
+     *
+     * @param usu
+     */
     public void Cargar(Usuario usu) {
         this.idUsuario = usu.getId();
         this.idRoll = usu.getRollUsuario().getId();
@@ -76,50 +100,110 @@ public class MbPermisos {
         ListaUsuarioSelect.add(new SelectItem(usu.getId(), usu.getNombreUsuario()));
     }
 
+    /**
+     * getU
+     *
+     * @return
+     */
     public Usuario getU() {
         return u;
     }
 
+    /**
+     * setU
+     *
+     * @param u
+     */
     public void setU(Usuario u) {
         this.u = u;
     }
 
+    /**
+     * getListaUsuarioSelect
+     *
+     * @return
+     */
     public List<SelectItem> getListaUsuarioSelect() {
         return ListaUsuarioSelect;
     }
 
+    /**
+     * setListaUsuarioSelect
+     *
+     * @param ListaUsuarioSelect
+     */
     public void setListaUsuarioSelect(List<SelectItem> ListaUsuarioSelect) {
         this.ListaUsuarioSelect = ListaUsuarioSelect;
     }
 
+    /**
+     * getIdRoll
+     *
+     * @return
+     */
     public Long getIdRoll() {
         return idRoll;
     }
 
+    /**
+     * setIdRoll
+     *
+     * @param idRoll
+     */
     public void setIdRoll(Long idRoll) {
         this.idRoll = idRoll;
     }
 
+    /**
+     * getIdUsuario
+     *
+     * @return
+     */
     public Long getIdUsuario() {
         return idUsuario;
     }
 
+    /**
+     * setIdUsuario
+     *
+     * @param idUsuario
+     */
     public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
+    /**
+     * getListaRollSelect
+     *
+     * @return
+     */
     public List<SelectItem> getListaRollSelect() {
         return ListaRollSelect;
     }
 
+    /**
+     * setListaRollSelect
+     *
+     * @param ListaRollSelect
+     */
     public void setListaRollSelect(List<SelectItem> ListaRollSelect) {
         this.ListaRollSelect = ListaRollSelect;
     }
 
+    /**
+     * getUsuarioXRoll
+     *
+     * @return
+     */
     public List<Usuario> getUsuarioXRoll() {
         return usuarioXRoll;
     }
 
+    /**
+     * setUsuarioXRoll
+     *
+     * @param usuarioXRoll
+     */
     public void setUsuarioXRoll(List<Usuario> usuarioXRoll) {
         this.usuarioXRoll = usuarioXRoll;
     }

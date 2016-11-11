@@ -20,11 +20,16 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
- import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 
 /**
+ * JSF Managed Beam encargado de la pantalla de index.xhtml en la seccion de
+ * resgistro de usuario donde se validara los campos ingresador y se procedera a
+ * realizar el guardado del usuario
  *
  * @author wilme
+ * @see Named
+ * @see SessionScoped
  */
 @Named(value = "mbUsuario")
 @SessionScoped
@@ -37,9 +42,18 @@ public class MbUsuario implements Serializable {
     private String contrasena1;
     private String contrasena2;
 
+    /**
+     * Constructor de la clase
+     */
     public MbUsuario() {
     }
 
+    /**
+     * Metodo Init el cual se ejecuta inmediatamente despues de la creacion del
+     * Managed Beam en este se inicializa los objetos y variables para este Mb
+     *
+     * @see PostConstruct
+     */
     @PostConstruct
     public void init() {
         usuario = new Usuario();
@@ -47,6 +61,13 @@ public class MbUsuario implements Serializable {
         contrasena2 = "";
     }
 
+    /**
+     * Funcion utilizada para verificar campo por campo a diligenciar por el
+     * usaurio al momento de restigrase en caso de que el campo se encuentre con
+     * informacion invalidad se le mostrara al usuario un mensaje
+     *
+     * @return @throws Exception
+     */
     public Boolean verificarFormulario() throws Exception {
         Boolean resultado = Boolean.TRUE;
 
@@ -112,6 +133,13 @@ public class MbUsuario implements Serializable {
         return resultado;
     }
 
+    /**
+     * Metodo utilizado como accion encargado de recoger los datos ingresados al
+     * formulario y ejecutar la accion de guardar del ejb commonsBean como
+     * resultado mostrara un mensaje tipo Growl mostrando el resultado
+     *
+     * @throws Exception
+     */
     public void accionGuarda() throws Exception {
         if (verificarFormulario()) {
             usuario.setContrasena(Md5.getEncoddedString(contrasena1));
@@ -126,6 +154,12 @@ public class MbUsuario implements Serializable {
         }
     }
 
+    /**
+     * Metodo encargado de rediccionar como parametro recibe un String que
+     * contiene el link ejemplo /usuario/index.xht
+     *
+     * @param url
+     */
     private void redirect(String url) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
@@ -135,31 +169,63 @@ public class MbUsuario implements Serializable {
         }
     }
 
+    /**
+     * Metodo utilizado para ejecutar la presentacion de un mensaje emergente
+     * tipo Growl en pantalla
+     *
+     * @param icono
+     * @param titulo
+     * @param mensaje
+     */
     public void mostrarMensaje(FacesMessage.Severity icono, String titulo, String mensaje) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(icono, titulo, mensaje));
     }
 
+    /**
+     * getUsuario
+     * @return
+     */
     public Usuario getUsuario() {
         return usuario;
     }
 
+    /**
+     * setUsuario
+     * @param usuario
+     */
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
+    /**
+     * getContrasena1
+     * @return
+     */
     public String getContrasena1() {
         return contrasena1;
     }
 
+    /**
+     * setContrasena1
+     * @param contrasena1
+     */
     public void setContrasena1(String contrasena1) {
         this.contrasena1 = contrasena1;
     }
 
+    /**
+     * getContrasena2
+     * @return
+     */
     public String getContrasena2() {
         return contrasena2;
     }
 
+    /**
+     * setContrasena2
+     * @param contrasena2
+     */
     public void setContrasena2(String contrasena2) {
         this.contrasena2 = contrasena2;
     }

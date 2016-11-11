@@ -22,7 +22,9 @@ import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 
 /**
- * JSF Managed Beam encargado  de la pantalla de Loguin y de Registro del Sitio Web
+ * JSF Managed Beam encargado de la pantalla de Loguin que se encuentra en el
+ * index.xhtml 
+ *
  * @author wilme
  * @see SessionScoped
  */
@@ -43,15 +45,17 @@ public class MbLoguin implements Serializable {
     private LogicaLoguin logicaLoguin;
 
     //Registro
-
     /**
-     * Constructor
+     * Constructor de la clase
      */
     public MbLoguin() {
     }
 
     /**
-     *Metodo Init el cual se ejecuta inmediatamente despues de la creacion del Managed Beam
+     * Metodo Init el cual se ejecuta inmediatamente despues de la creacion del
+     * Managed Beam en este se inicializa los objetos y variables para el
+     * Managed Beam
+     *
      * @see PostConstruct
      */
     @PostConstruct
@@ -70,7 +74,10 @@ public class MbLoguin implements Serializable {
     }
 
     /**
-     * 
+     * Funcion tipo accion las cual es llamada desde un event del un html
+     * obtiene los datos de nombre y contraseña y ejecuta la operacion del ejb
+     * login y retorna el resultado.
+     *
      * @return
      */
     public String accionLogin() {
@@ -108,6 +115,10 @@ public class MbLoguin implements Serializable {
     }
 
     /**
+     * Funcion tipo accion las cual es llamada desde un event del un html en
+     * esta acion se realiza el proceso de cierre se sesion lo que se realiza es
+     * cambiar el estado de las variable de sesion que almacena el usuario
+     * actual.
      *
      * @return
      */
@@ -127,6 +138,12 @@ public class MbLoguin implements Serializable {
         return null;
     }
 
+    /**
+     * Metodo encargado de rediccionar como parametro recibe un String que
+     * contiene el link ejemplo /usuario/index.xhtml
+     *
+     * @param url
+     */
     private void redirect(String url) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
@@ -137,6 +154,8 @@ public class MbLoguin implements Serializable {
     }
 
     /**
+     * Metodo utilizado para ejecutar la presentacion de un mensaje emergente
+     * tipo Growl en pantall
      *
      * @param icono
      * @param titulo
@@ -148,6 +167,7 @@ public class MbLoguin implements Serializable {
     }
 
     /**
+     * getNombreDeUsuaio
      *
      * @return
      */
@@ -156,6 +176,7 @@ public class MbLoguin implements Serializable {
     }
 
     /**
+     * setNombreDeUsuaio
      *
      * @param nombreDeUsuaio
      */
@@ -164,6 +185,7 @@ public class MbLoguin implements Serializable {
     }
 
     /**
+     * getPassword
      *
      * @return
      */
@@ -172,6 +194,7 @@ public class MbLoguin implements Serializable {
     }
 
     /**
+     * setPassword
      *
      * @param password
      */
@@ -180,6 +203,7 @@ public class MbLoguin implements Serializable {
     }
 
     /**
+     * getUsuario
      *
      * @return
      */

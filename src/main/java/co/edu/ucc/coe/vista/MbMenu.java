@@ -18,8 +18,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 /**
+ * JSF Managed Beam encargado la presentacion de los elementos del menu lateral
  *
  * @author wilme
+ * @see ViewScoped
+ * @see ManagedBean
  */
 @ViewScoped
 @ManagedBean(name = "MbMenu")
@@ -38,20 +41,35 @@ public class MbMenu {
     public MbMenu() {
     }
 
+    /**
+     * Metodo Init el cual se ejecuta inmediatamente despues de la creacion del
+     * Managed Beam en este se inicializa los objetos y variables para el
+     * Managed Beam
+     *
+     * @see PostConstruct
+     */
     @PostConstruct
     public void init() {
         listaVistas = new ArrayList<>();
-
         listaVistas = lm.getVistasMenuUsuario((Usuario) SessionOperations.getSessionValue("USUARIO"));
     }
 
+    /**
+     * getListaVistas
+     *
+     * @return
+     */
     public List<Vista> getListaVistas() {
         return listaVistas;
     }
 
+    /**
+     * setListaVistas
+     *
+     * @param listaVistas
+     */
     public void setListaVistas(List<Vista> listaVistas) {
         this.listaVistas = listaVistas;
     }
 
-    
 }
