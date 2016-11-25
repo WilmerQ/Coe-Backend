@@ -21,11 +21,13 @@ import javax.persistence.Transient;
 public class Usuario extends CamposComunesdeEntidad implements Serializable {
 
     /**
-     *Variable String para almacenar el nombre del usuario con el cual se registra
+     * Variable String para almacenar el nombre del usuario con el cual se
+     * registra
      */
     private String nombreUsuario;
     /**
-     * Variable String para almacenar la contraseña, dicha contaseña se recibe encriptada con md5
+     * Variable String para almacenar la contraseña, dicha contaseña se recibe
+     * encriptada con md5
      */
     private String contrasena;
     /**
@@ -33,20 +35,25 @@ public class Usuario extends CamposComunesdeEntidad implements Serializable {
      */
     private String email;
     /**
-     * Variable String para almacenar el telefono ingresado por el usaurio para su registro
+     * Variable String para almacenar el telefono ingresado por el usaurio para
+     * su registro
      */
     private String telefono;
     /**
-     * Variable Integer utilizada para comunicar un error al momento de utilizar el Web service 
+     * Variable Integer utilizada para comunicar un error al momento de utilizar
+     * el Web service
      */
     @Transient
     private Integer informeDeError;
     /**
-     * Objeto Roll el cual se designado para el usuario, dicho objeto se debe asignar por el usuario Administrador  
-     * luego de haberse registrado
+     * Objeto Roll el cual se designado para el usuario, dicho objeto se debe
+     * asignar por el usuario Administrador luego de haberse registrado
      */
     @ManyToOne
     private Roll rollUsuario;
+
+    @ManyToOne
+    private EquipoTrabajo equipoTrabajo;
 
     /**
      * getNombreUsuario
@@ -154,6 +161,14 @@ public class Usuario extends CamposComunesdeEntidad implements Serializable {
      */
     public void setRollUsuario(Roll rollUsuario) {
         this.rollUsuario = rollUsuario;
+    }
+
+    public EquipoTrabajo getEquipoTrabajo() {
+        return equipoTrabajo;
+    }
+
+    public void setEquipoTrabajo(EquipoTrabajo equipoTrabajo) {
+        this.equipoTrabajo = equipoTrabajo;
     }
 
 }

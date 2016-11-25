@@ -32,6 +32,26 @@ public class Usuario implements Serializable {
      */
     private Integer informeDeError;
 
+    private Long idEquipo;
+
+    private Long idRoll;
+
+    public Long getIdEquipo() {
+        return idEquipo;
+    }
+
+    public void setIdEquipo(Long idEquipo) {
+        this.idEquipo = idEquipo;
+    }
+
+    public Long getIdRoll() {
+        return idRoll;
+    }
+
+    public void setIdRoll(Long idRoll) {
+        this.idRoll = idRoll;
+    }
+
     /**
      * Gets nombre usuario.
      *

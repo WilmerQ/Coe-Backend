@@ -32,5 +32,23 @@ public class LogicaUsuarios {
         System.out.println("tamaño list usuarios" + temp.size());
         return temp;
     }
+    
+    public List<Usuario> getUsuariosConEquipoTrabajo() {
+        List<Usuario> temp = em.createQuery("SELECT r FROM Usuario r where r.equipoTrabajo!=null").getResultList();
+        System.out.println("tamaño list usuarios" + temp.size());
+        return temp;
+    }
+    
+    public List<Usuario> getUsuariosSinEquipoTrabajo() {
+        List<Usuario> temp = em.createQuery("SELECT r FROM Usuario r where r.equipoTrabajo=null").getResultList();
+        System.out.println("tamaño list usuarios" + temp.size());
+        return temp;
+    }
    
+    
+   public List<Usuario> getUsuariosConEquipoTrabajo(String nombreUsuario) {
+        List<Usuario> temp = em.createQuery("SELECT r FROM Usuario r where r.equipoTrabajo!=null and r.equipoTrabajo.jefeEquipo.nombreUsuario=:p").setParameter("p", nombreUsuario).getResultList();
+        System.out.println("tamaño list usuarios" + temp.size());
+        return temp;
+    }
 }

@@ -35,8 +35,7 @@ public class LogicaVista {
      */
     public void ingresarVistas() {
         GuardarVista("index", "index.xhtml", "");
-        GuardarVista("equipo", "gestionequipo.xhtml", "");
-        GuardarVista("mapa", "gestionequipo.xhtml", "");
+        GuardarVista("Mi Equipo", "gestionequipo.xhtml", "");
         GuardarVista("ejemplo", "gestionequipo.xhtml", "");
     }
 

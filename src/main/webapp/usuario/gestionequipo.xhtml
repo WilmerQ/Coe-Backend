@@ -1,16 +1,220 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      lang="en"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:include src="../css/templates/head_config.xhtml"/>
+        <title>Centro De Operaciones de Santa Marta - COE</title>
+    </h:head>
+
+    <h:body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                <ui:include src="../css/templates/base.xhtml"/>
+
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    <div class="page-title" align="center">
+                        <div class="title">
+                            <h3>Equipo De Trabajo</h3>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Crea Tu Equipo</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <br />
+                                    <h:form role="form" prependId="false" id="form" class="form-horizontal form-label-left">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nombre:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <p:inputText id="nombreequipo" type="text" styleClass="form-control col-md-7 col-xs-12" required="true" value="#{MbEquipoTrabajo.equipoTrabajo.nombreEquipo}" requiredMessage="Ingrese el nombre del nuevo equipo"/>
+                                            </div>
+                                        </div>
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group" align="center">
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                <p:commandButton  value="Guardar" update=":form :tablaequiposxusuario :tablaequipos" styleClass="btn btn-success" actionListener="#{MbEquipoTrabajo.accionGuarda()}" />    
+                                            </div>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-6 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Tus Equipos</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <br />
+                                    <h:form role="form2" id="form2" prependId="false" class="form-horizontal form-label-left">
+                                        <div class="form-group" align="center">
+                                            <p:dataTable id="tablaequiposxusuario" value="#{MbEquipoTrabajo.equipoTrabajosXUsuario}"  var="row" paginator="true" rows="10" paginatorPosition="bottom" >
+                                                <p:column headerText="Id" style="width: 60px">
+                                                    <p:outputLabel value="#{row.id}" />
+                                                </p:column>
+                                                <p:column headerText="Nombre">
+                                                    <p:outputLabel value="#{row.nombreEquipo}" />
+                                                </p:column>
+                                                <p:column style="width: 100px">
+                                                    <p:commandLink id="editar" action="#{MbEquipoTrabajo.cargarEquipo(row)}" update=":form:nombreequipo">
+                                                        <span class="fa fa-edit"/>
+                                                    </p:commandLink>
+                                                </p:column>
+                                            </p:dataTable> 
+                                        </div>
+
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Todos los equipos de Trabajo</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <br />
+                                    <h:form role="form3" id="form3" prependId="false" class="form-horizontal form-label-left">
+                                        <div class="form-group" align="center">
+                                            <p:dataTable id="tablaequipos" value="#{MbEquipoTrabajo.equipoTrabajos}"  var="row" paginator="true" rows="10" paginatorPosition="bottom" >
+                                                <p:column headerText="Id" style="width: 60px">
+                                                    <p:outputLabel value="#{row.id}" />
+                                                </p:column>
+                                                <p:column headerText="Nombre">
+                                                    <p:outputLabel value="#{row.nombreEquipo}" />
+                                                </p:column>
+                                                <p:column headerText="Jefe de Equipo">
+                                                    <p:outputLabel value="#{row.jefeEquipo.nombreUsuario}" />
+                                                </p:column>
+                                            </p:dataTable> 
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Agregar Usuarios al equipo</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <br />
+                                    <h:form role="form4" prependId="false" id="form4" class="form-horizontal form-label-left">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Usuario: <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <h:selectOneMenu value="#{MbEquipoTrabajo.idUsuario}" styleClass="form-control"  required="true" requiredMessage="Se Debe Selecionar Usuario">
+                                                    <f:selectItem itemLabel="Seleccione Usuario" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{MbEquipoTrabajo.listaUsuarioSelect}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Asignar Roll: <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <h:selectOneMenu value="#{MbEquipoTrabajo.idEquipo}" styleClass="form-control" required="true" requiredMessage="Se Debe Selecionar un equipo">
+                                                    <f:selectItem itemLabel="Selecione Equipo" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{MbEquipoTrabajo.listaEquiposSelect}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group" align="center">
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                <p:commandButton  value="Guardar" update=":form4 :tablausuarioxequipo" styleClass="btn btn-success" actionListener="#{MbEquipoTrabajo.accionGuardaUsualxEquipo()}" />    
+                                            </div>
+                                        </div>
+                                    </h:form>
+                                    <div class="x_title">
+                                        <h2>usuarios Asignados</h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <h:form role="form5" id="form5" prependId="false" class="form-horizontal form-label-left">
+                                        <div class="form-group" align="center">
+                                            <p:dataTable id="tablausuarioxequipo" value="#{MbEquipoTrabajo.usuarioXEquipo}"  var="row" paginator="true" rows="10" paginatorPosition="bottom" >
+                                                <p:column headerText="Id" style="width: 60px">
+                                                    <p:outputLabel value="#{row.id}" />
+                                                </p:column>
+                                                <p:column headerText="Nombre Usuario">
+                                                    <p:outputLabel value="#{row.nombreUsuario}" />
+                                                </p:column>
+                                                <p:column headerText="Equipo Asignado">
+                                                    <p:outputLabel value="#{row.equipoTrabajo.nombreEquipo}" />
+                                                </p:column>
+                                                <p:column style="width: 100px">
+                                                    <p:commandLink id="editar" action="#{MbEquipoTrabajo.Cargar(row)}" update=":form4">
+                                                        <span class="fa fa-edit"></span>
+                                                    </p:commandLink>
+                                                </p:column>
+                                            </p:dataTable> 
+                                        </div>
+
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+
+
+
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+        </div>
+
+        <ui:include src="../css/templates/footer_scripts.xhtml"/>
+
+    </h:body>
 </html>
+
