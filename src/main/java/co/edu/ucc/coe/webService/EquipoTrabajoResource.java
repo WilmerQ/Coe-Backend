@@ -6,14 +6,21 @@
 package co.edu.ucc.coe.webService;
 
 import co.edu.ucc.coe.base.GsonExcludeListStrategy;
-import co.edu.ucc.coe.clases.Dispositivo;
-import co.edu.ucc.coe.clases.SolicitarEquipo;
+import co.edu.ucc.coe.clases.GcmObjeto;
+import co.edu.ucc.coe.model.Dispositivo;
 import co.edu.ucc.coe.model.EquipoTrabajo;
 import co.edu.ucc.coe.model.Usuario;
+import co.edu.ucc.coe.model.Peticion;
 import co.edu.ucc.coe.service.CommonsBean;
+import co.edu.ucc.coe.service.LogicaAlerta;
+import co.edu.ucc.coe.service.LogicaDispositivo;
+import co.edu.ucc.coe.service.LogicaEquipoTrabajo;
+import co.edu.ucc.coe.service.LogicaPeticion;
 import co.edu.ucc.coe.webService.base.ResponseMessenger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -24,7 +31,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -42,6 +48,15 @@ public class EquipoTrabajoResource {
     private UriInfo context;
     @EJB
     private CommonsBean cb;
+
+    @EJB
+    private LogicaAlerta la;
+    @EJB
+    private LogicaEquipoTrabajo let;
+    @EJB
+    private LogicaDispositivo ld;
+    @EJB
+    private LogicaPeticion lp;
 
     /**
      * Creates a new instance of EquipoTrabajoResource
@@ -71,4 +86,26 @@ public class EquipoTrabajoResource {
         }
     }
 
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{nombreEquipoTrabajo}/{usuario}")
+    public Response BuscandoALaGente(@PathParam("nombreEquipoTrabajo") String nombreEquipoTrabajo,
+            @PathParam("usuario") String usuario) {
+
+        try {
+            Usuario u = (Usuario) cb.getById(Usuario.class, Long.parseLong(usuario));
+            Dispositivo d = ld.getDispositivo((Usuario) cb.getById(Usuario.class, Long.parseLong(usuario)));
+            Gson gson = new Gson();
+            String s = gson.fromJson(nombreEquipoTrabajo, String.class);
+            EquipoTrabajo et = let.getEquipoTrabajoxNombre(s);
+           
+            GcmObjeto gcmObjeto = new GcmObjeto();
+            gcmObjeto.setTipo("CompartirUbicacion");
+            gcmObjeto.setPeticion(lp.getPeticion(d.getAndroidID(), u.getNombreUsuario()));
+            la.EnviarAlerta(gcmObjeto, s);
+            return new ResponseMessenger().getResponseOk("ok: " + lp.getPeticion(d.getAndroidID(), u.getNombreUsuario()).getId());
+        } catch (JsonSyntaxException | IOException | NumberFormatException e) {
+            return new ResponseMessenger().getResponseError("Problema interno del servidor");
+        }
+    }
 }

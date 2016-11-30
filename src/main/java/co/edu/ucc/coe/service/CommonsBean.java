@@ -79,7 +79,7 @@ public class CommonsBean {
     public Object getByOneFieldWithOneResult(Class o, String campo, Object value) throws Exception {
         String nombreClase = o.getSimpleName();
         try {
-            return em.createQuery("Select o from " + nombreClase + " o where o." + campo + " = :v").setParameter("v", value).getSingleResult();
+            return em.createQuery("Select o from " + nombreClase + " o where o." + campo + "= :v").setParameter("v", value).getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
