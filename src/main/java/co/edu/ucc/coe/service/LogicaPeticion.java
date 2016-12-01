@@ -6,6 +6,7 @@
 package co.edu.ucc.coe.service;
 
 import co.edu.ucc.coe.model.Peticion;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,12 +21,14 @@ public class LogicaPeticion {
     @PersistenceContext(unitName = "COEPU")
     private EntityManager em;
 
-    public Peticion getPeticion(String Id, String nombre){
+    public Peticion getPeticion(String Id, String nombre) {
         try {
-            return (Peticion) em.createQuery("SELECT p FROM Peticion p where p.IDdispositivoRealizador= :id AND p.NombreUsuario= :nombre").setParameter("id", Id).setParameter("nombre", nombre).getSingleResult();
+            List<Peticion> temp = (List<Peticion>) em.createQuery("SELECT p FROM Peticion p where p.IDdispositivoRealizador= :id AND p.NombreUsuario= :nombre").setParameter("id", Id).setParameter("nombre", nombre).getResultList();
+            
+            return temp.get(temp.size()-1);
         } catch (Exception e) {
             return null;
         }
     }
-    
+
 }

@@ -91,18 +91,23 @@ public class EquipoTrabajoResource {
     @Path("/{nombreEquipoTrabajo}/{usuario}")
     public Response BuscandoALaGente(@PathParam("nombreEquipoTrabajo") String nombreEquipoTrabajo,
             @PathParam("usuario") String usuario) {
-
         try {
             Usuario u = (Usuario) cb.getById(Usuario.class, Long.parseLong(usuario));
             Dispositivo d = ld.getDispositivo((Usuario) cb.getById(Usuario.class, Long.parseLong(usuario)));
             Gson gson = new Gson();
             String s = gson.fromJson(nombreEquipoTrabajo, String.class);
             EquipoTrabajo et = let.getEquipoTrabajoxNombre(s);
-           
+            Peticion p = new Peticion();
+            System.out.println(" nombre usuario " + u.getNombreUsuario());
+            p.setNombreUsuario(u.getNombreUsuario());
+            p.setIDdispositivoRealizador(d.getAndroidID());
+            cb.guardar(p);
+
             GcmObjeto gcmObjeto = new GcmObjeto();
             gcmObjeto.setTipo("CompartirUbicacion");
+            System.out.println("BuscandoALaGente: setpeticion " + lp.getPeticion(d.getAndroidID(), u.getNombreUsuario()));
             gcmObjeto.setPeticion(lp.getPeticion(d.getAndroidID(), u.getNombreUsuario()));
-            la.EnviarAlerta(gcmObjeto, s);
+            la.EnviarAlerta(gcmObjeto, s, d.getAndroidID());
             return new ResponseMessenger().getResponseOk("ok: " + lp.getPeticion(d.getAndroidID(), u.getNombreUsuario()).getId());
         } catch (JsonSyntaxException | IOException | NumberFormatException e) {
             return new ResponseMessenger().getResponseError("Problema interno del servidor");
