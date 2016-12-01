@@ -57,7 +57,7 @@ public class LogicaAlerta {
             }
             Sender sender = new Sender(GCM_API_KEY);
             System.out.println("EnviarAlerta: sender" + sender.toString());
-            Message message = new Message.Builder().timeToLive(30).delayWhileIdle(true).addData(MESSAGE_KEY, mensaje).build();
+            Message message = new Message.Builder().delayWhileIdle(true).addData(MESSAGE_KEY, mensaje).build();
             MulticastResult result = sender.send(message, devicesList, 1);
             System.out.println("Resultado: " + result.toString());
             sender.send(message, devicesList, 1);
