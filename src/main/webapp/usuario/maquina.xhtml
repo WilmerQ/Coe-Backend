@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      lang="en"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:include src="../css/templates/head_config.xhtml"/>
+        <title>Centro De Operaciones COE</title>
+    </h:head>
+
+    <h:body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                <ui:include src="../css/templates/base.xhtml"/>
+
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    <div class="page-title" align="center">
+                        <div class="title">
+                            <h3>Vehiculo</h3>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Informacion basica</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="x_content">
+                                    <h:form role="form" prependId="false" id="form" styleClass="form-horizontal form-label-left">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tipo de vehiculo:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <h:selectOneMenu value="#{MbMaquina.idMaquina}" styleClass="form-control"  required="true"
+                                                                 requiredMessage="Se Debe Selecionar Usuario">
+                                                    <f:selectItem itemLabel="Seleccione Tipo" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{MbMaquina.listTipoVehiculos}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">numero chasis:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <p:inputText type="text" styleClass="form-control col-md-7 col-xs-12" required="true" value="#{MbMaquina.maquina.numeroChasis}" requiredMessage=""/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Placa vehiculo:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <p:inputText type="text" styleClass="form-control col-md-7 col-xs-12" required="true" value="#{MbMaquina.maquina.numeroPlaca}" requiredMessage=""/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Modelo vehiculo:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <h:selectOneMenu value="#{MbMaquina.maquina.modelo}" styleClass="form-control"  required="true"
+                                                                 requiredMessage="Se Debe Selecionar Usuario">
+                                                    <f:selectItem itemLabel="Seleccione Tipo" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{MbMaquina.listModelos}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kilometros/Horas Actuales:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <p:inputText type="text" styleClass="form-control col-md-7 col-xs-12" required="true" value="#{MbMaquina.maquina.estadoUnidadInial}" requiredMessage=""/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group"> 
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Programar Mantenimiento:  <span class="required">*</span>
+                                            </label>
+                                            <h:panelGrid columns="2" cellspacing="10">
+                                                <div class="knob-container  ui-corner-all">
+                                                    <p:knob max="10000" step="50" width="100" height="100" labelTemplate="{value}" value="#{MbMaquina.slider}"/>   
+                                                </div>
+                                                <p:outputLabel value="Kilometros y/o Horas"/>
+                                            </h:panelGrid>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Estado:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <h:selectOneMenu value="#{MbMaquina.maquina.estadoActual}" styleClass="form-control"  required="true"
+                                                                 requiredMessage="Se Debe Selecionar Usuario">
+                                                    <f:selectItem itemLabel="Seleccione Estado" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{MbMaquina.listEstados}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group" align="center">
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                <p:commandButton  value="Guardar" styleClass="btn btn-success" actionListener="#{MbMaquina.accionGuardar()}" update="form" />    
+                                            </div>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Tus Vehiculos</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div class="x_content">
+                                    <h:form role="form1" prependId="false" id="form1" styleClass="form-horizontal form-label-left">
+                                        <div class="form-group" align="center">
+                                            <p:dataTable id="tablamaquinascreadas" value="#{MbMaquina.maquinas}"  var="row" paginator="true" rows="10" paginatorPosition="bottom" >
+                                                <p:column headerText="Placa">
+                                                    <p:outputLabel value="#{row.numeroPlaca}" />
+                                                </p:column>
+                                                <p:column headerText="Numero Chasis">
+                                                    <p:outputLabel value="#{row.numeroChasis}" />
+                                                </p:column>
+                                                <p:column headerText="Modelo">
+                                                    <p:outputLabel value="#{row.modelo}" />
+                                                </p:column>
+                                                <p:column headerText="Tipo Maquina">
+                                                    <p:outputLabel value="#{row.tipoMaquinaria.nombremaquina}" />
+                                                </p:column>
+                                                
+                                                <p:column style="width: 100px" headerText="Editar">
+                                                    <p:commandLink id="editar" action="#{MbMaquina.Cargar(row)}" update=":form">
+                                                        <span class="fa fa-edit"></span>
+                                                    </p:commandLink>
+                                                </p:column>
+                                            </p:dataTable> 
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+        </div>
+
+        <ui:include src="../css/templates/footer_scripts.xhtml"/>
+
+    </h:body>
+</html>

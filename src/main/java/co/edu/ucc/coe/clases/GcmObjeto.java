@@ -18,6 +18,7 @@ public class GcmObjeto implements Serializable {
 
     String tipo;
     Peticion peticion;
+    GcmObjetoRespuesta respuesta;
 
     public String getTipo() {
         return tipo;
@@ -35,4 +36,13 @@ public class GcmObjeto implements Serializable {
         this.peticion = peticion;
     }
 
+    public GcmObjetoRespuesta getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(GcmObjetoRespuesta respuesta) {
+        this.respuesta = respuesta;
+    }
+
+    
 }

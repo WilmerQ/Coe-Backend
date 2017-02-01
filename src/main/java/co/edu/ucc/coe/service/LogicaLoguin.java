@@ -6,6 +6,7 @@
 package co.edu.ucc.coe.service;
 
 import co.edu.ucc.coe.model.Usuario;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,6 +17,7 @@ import javax.persistence.PersistenceContext;
  * @see Stateless
  */
 @Stateless
+@LocalBean
 public class LogicaLoguin {
 
     @PersistenceContext(unitName = "COEPU")
@@ -34,7 +36,7 @@ public class LogicaLoguin {
             return usuario;
         }
         try {
-            return (Usuario) em.createQuery("Select u from Usuario u where u.nombreUsuario = :n and u.contrasena = :p")
+            return (Usuario) em.createQuery("Select u from Usuario u where u.nombreUsuario= :n and u.contrasena = :p")
                     .setParameter("n", nombreUsuario)
                     .setParameter("p", passwordPlano).getSingleResult();
         } catch (Exception e) {

@@ -6,8 +6,8 @@
 package co.edu.ucc.coe.vista;
 
 import co.edu.ucc.coe.clases.VistaActiva;
-import co.edu.ucc.coe.model.Roll;
-import co.edu.ucc.coe.model.Vista;
+import co.edu.ucc.coe.model.accesoDinamico.Roll;
+import co.edu.ucc.coe.model.accesoDinamico.Vista;
 import co.edu.ucc.coe.service.CommonsBean;
 import co.edu.ucc.coe.service.LogicaVista;
 import java.io.Serializable;

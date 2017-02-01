@@ -6,9 +6,9 @@
 package co.edu.ucc.coe.service;
 
 import co.edu.ucc.coe.clases.VistaActiva;
-import co.edu.ucc.coe.model.Roll;
-import co.edu.ucc.coe.model.Vista;
-import co.edu.ucc.coe.model.VistasXRoll;
+import co.edu.ucc.coe.model.accesoDinamico.Roll;
+import co.edu.ucc.coe.model.accesoDinamico.Vista;
+import co.edu.ucc.coe.model.accesoDinamico.VistasXRoll;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -34,9 +34,10 @@ public class LogicaVista {
      * metodo que permite adicionar las nuevas vistas segun se vallan creando los .Xhtml
      */
     public void ingresarVistas() {
-        GuardarVista("index", "index.xhtml", "");
-        GuardarVista("Mi Equipo", "gestionequipo.xhtml", "");
-        GuardarVista("ejemplo", "gestionequipo.xhtml", "");
+        GuardarVista("Mi Equipo", "gestionequipo.xhtml", "fa fa-child");
+        GuardarVista("Tipo Vehiculo", "tipomaquinaria.xhtml", "fa fa-briefcase");
+        GuardarVista("Vehiculo", "maquina.xhtml", "fa fa-car");
+        GuardarVista("Actividad Vehiculos", "actividadvehiculo.xhtml", "fa fa-clock-o");
     }
 
     /**

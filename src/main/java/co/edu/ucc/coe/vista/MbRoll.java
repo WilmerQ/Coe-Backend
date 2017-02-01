@@ -5,7 +5,7 @@
  */
 package co.edu.ucc.coe.vista;
 
-import co.edu.ucc.coe.model.Roll;
+import co.edu.ucc.coe.model.accesoDinamico.Roll;
 import co.edu.ucc.coe.service.CommonsBean;
 import co.edu.ucc.coe.service.LogicaVista;
 import java.io.Serializable;

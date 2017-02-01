@@ -5,9 +5,11 @@
  */
 package co.edu.ucc.coe.model;
 
+import co.edu.ucc.coe.model.accesoDinamico.Roll;
 import co.edu.ucc.coe.base.CamposComunesdeEntidad;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
@@ -54,7 +56,9 @@ public class Usuario extends CamposComunesdeEntidad implements Serializable {
 
     @ManyToOne
     private EquipoTrabajo equipoTrabajo;
-
+    
+    @Lob
+    private byte[] imagenperfil;
     /**
      * getNombreUsuario
      *
@@ -171,4 +175,13 @@ public class Usuario extends CamposComunesdeEntidad implements Serializable {
         this.equipoTrabajo = equipoTrabajo;
     }
 
+    public byte[] getImagenperfil() {
+        return imagenperfil;
+    }
+
+    public void setImagenperfil(byte[] imagenperfil) {
+        this.imagenperfil = imagenperfil;
+    }
+
+    
 }

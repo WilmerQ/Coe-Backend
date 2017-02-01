@@ -78,35 +78,55 @@ and open the template in the editor.
                         <h:form id="form2">
                             <h1>creación de cuenta</h1>
                             <div>
-                                <p:inputText type="text" styleClass="form-control" placeholder="Nombre Usuario" value="#{mbUsuario.usuario.nombreUsuario}"/>
+                                <p:inputText type="text" styleClass="form-control" placeholder="Nombre Usuario" value="#{MbUsuario.usuario.nombreUsuario}"/>
                             </div>
                             <div>
-                                <p:inputText type="email" styleClass="form-control" placeholder="Correo Electronico" value="#{mbUsuario.usuario.email}"/>
+                                <p:inputText type="email" styleClass="form-control" placeholder="Correo Electronico" value="#{MbUsuario.usuario.email}"/>
                             </div>
                             <div>
-                                <p:inputText type="text" styleClass="form-control" placeholder="Numero Celular" value="#{mbUsuario.usuario.telefono}"/>
+                                <p:inputText type="text" styleClass="form-control" placeholder="Numero Celular" value="#{MbUsuario.usuario.telefono}"/>
                             </div>
                             <div>
-                                <p:inputText type="password" styleClass="form-control" placeholder="Contraseña" value="#{mbUsuario.contrasena1}"/>
+                                <p:inputText type="password" styleClass="form-control" placeholder="Contraseña" value="#{MbUsuario.contrasena1}"/>
                             </div>
                             <div>
-                                <p:inputText type="password" styleClass="form-control" placeholder="Confirmar Contraseña" value="#{mbUsuario.contrasena2}"/>
+                                <p:inputText type="password" styleClass="form-control" placeholder="Confirmar Contraseña" value="#{MbUsuario.contrasena2}"/>
                             </div>
+
+                            <p:fileUpload id="upload"
+                                          fileUploadListener="#{MbUsuario.handleFileUpload}"
+                                          dragDropSupport="false"  
+                                          mode="advanced"
+                                          multiple="false" 
+                                          auto="true"
+                                          label="Seleccione Foto Perfil"
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                          cancelLabel="Cancelar"
+                                          uploadLabel="Subir Archivos"
+                                          update=":form-graf">
+                            </p:fileUpload>
+                        </h:form>
+                        <h:form id="form-graf">
+                            <p:graphicImage id="graf" rendered="#{MbUsuario.usuario.imagenperfil != null}"
+                                            url="http://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg"
+                                            style="width: 59px; height:80px" /> 
                             <div>
+                                <br/>
                                 <p:commandButton  value="Enviar"  update=":form2 growl-total" actionListener="#{mbUsuario.accionGuarda()}" styleClass="btn btn-default submit" />    
                             </div>
+                        </h:form>
+
+                        <div class="clearfix"></div>
+
+                        <div class="separator">
+                            <p class="change_link">Already a member ?
+                                <a href="#signin" class="to_register"> Iniciar sesión</a>
+                            </p>
 
                             <div class="clearfix"></div>
+                            <br />
+                        </div>
 
-                            <div class="separator">
-                                <p class="change_link">Already a member ?
-                                    <a href="#signin" class="to_register"> Iniciar sesión</a>
-                                </p>
-
-                                <div class="clearfix"></div>
-                                <br />
-                            </div>
-                        </h:form>
                     </section>
                 </div>
             </div>

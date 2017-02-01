@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.ucc.coe.model;
+package co.edu.ucc.coe.model.accesoDinamico;
 
 import co.edu.ucc.coe.base.CamposComunesdeEntidad;
 import java.io.Serializable;

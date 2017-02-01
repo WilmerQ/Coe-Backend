@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      lang="en"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:include src="../css/templates/head_config.xhtml"/>
+        <title>Centro De Operaciones COE</title>
+    </h:head>
+
+    <h:body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                <ui:include src="../css/templates/base.xhtml"/>
+
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Crear Tipo Maquina</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <h:form role="form" prependId="false" id="form" class="form-horizontal form-label-left">
+                                    <div class="x_content">
+                                        <br />
+                                        <div class="form-group">
+                                            <p:panelGrid columns="2">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Categoria:<span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <h:selectOneMenu value="#{MbTipoMaquina.tipomaquina.categoriaVehiculo}" styleClass="form-control"  required="true"
+                                                                     requiredMessage="Se Debe Selecionar Usuario">
+                                                        <f:selectItem itemLabel="Seleccione Tipo" itemValue="" noSelectionOption="true" />
+                                                        <f:selectItems value="#{MbTipoMaquina.categorias}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nombre Maquina:<span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <p:inputText type="text" styleClass="form-control col-md-7 col-xs-12" required="true" value="#{MbTipoMaquina.tipomaquina.nombremaquina}" requiredMessage="Ingrese el nombre de la maquina"/>
+                                                </div>
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Descripcion:<span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <p:editor value="#{MbTipoMaquina.tipomaquina.descripcion}"/>
+                                                </div>
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tipo de carga:<span class="required">*</span>
+                                                </label>
+                                                <h:selectOneMenu value="#{MbTipoMaquina.tipomaquina.unidadCarga}" styleClass="form-control"  required="true"
+                                                                 requiredMessage="Se Debe Selecionar Usuario">
+                                                    <f:selectItem itemLabel="Seleccione Tipo" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{MbTipoMaquina.tipoCarga}"/>
+                                                </h:selectOneMenu>
+
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Medir uso:<span class="required">*</span>
+                                                </label>
+                                                <h:selectOneMenu value="#{MbTipoMaquina.tipomaquina.unidadMedicion}" styleClass="form-control"  required="true"
+                                                                 requiredMessage="Se Debe Selecionar Usuario">
+                                                    <f:selectItem itemLabel="Seleccione Tipo" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{MbTipoMaquina.listaTipoConteo}"/>
+                                                </h:selectOneMenu>
+                                            </p:panelGrid>
+                                        </div>
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group" align="center">
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                <p:commandButton  value="Guardar" styleClass="btn btn-success" actionListener="#{MbTipoMaquina.accionGuardar()}" />    
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+        </div>
+
+        <ui:include src="../css/templates/footer_scripts.xhtml"/>
+
+    </h:body>
+</html>

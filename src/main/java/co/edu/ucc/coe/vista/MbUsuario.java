@@ -6,13 +6,15 @@
 package co.edu.ucc.coe.vista;
 
 import co.edu.ucc.coe.base.Md5;
+import co.edu.ucc.coe.base.SessionOperations;
 import co.edu.ucc.coe.model.Usuario;
 import co.edu.ucc.coe.service.CommonsBean;
 
 import java.io.IOException;
-import javax.inject.Named;
+import java.io.InputStream;
 
 import java.io.Serializable;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -20,7 +22,10 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.enterprise.context.SessionScoped;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import org.primefaces.event.FileUploadEvent;
 
 /**
  * JSF Managed Beam encargado de la pantalla de index.xhtml en la seccion de
@@ -31,8 +36,8 @@ import javax.enterprise.context.SessionScoped;
  * @see Named
  * @see SessionScoped
  */
-@Named(value = "mbUsuario")
 @SessionScoped
+@ManagedBean(name = "MbUsuario")
 public class MbUsuario implements Serializable {
 
     @EJB
@@ -154,6 +159,21 @@ public class MbUsuario implements Serializable {
         }
     }
 
+    public void handleFileUpload(FileUploadEvent event) {
+        UUID id = UUID.randomUUID();
+        try {
+            System.out.println("aqui estoy");
+            InputStream fi;
+            fi = event.getFile().getInputstream();
+            byte[] buffer = new byte[(int) event.getFile().getSize()];
+            fi.read(buffer);
+            usuario.setImagenperfil(buffer);
+            SessionOperations.setSessionValue(id.toString().toUpperCase(), buffer);
+        } catch (IOException ex) {
+            Logger.getLogger(MbUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * Metodo encargado de rediccionar como parametro recibe un String que
      * contiene el link ejemplo /usuario/index.xht
@@ -184,6 +204,7 @@ public class MbUsuario implements Serializable {
 
     /**
      * getUsuario
+     *
      * @return
      */
     public Usuario getUsuario() {
@@ -192,6 +213,7 @@ public class MbUsuario implements Serializable {
 
     /**
      * setUsuario
+     *
      * @param usuario
      */
     public void setUsuario(Usuario usuario) {
@@ -200,6 +222,7 @@ public class MbUsuario implements Serializable {
 
     /**
      * getContrasena1
+     *
      * @return
      */
     public String getContrasena1() {
@@ -208,6 +231,7 @@ public class MbUsuario implements Serializable {
 
     /**
      * setContrasena1
+     *
      * @param contrasena1
      */
     public void setContrasena1(String contrasena1) {
@@ -216,6 +240,7 @@ public class MbUsuario implements Serializable {
 
     /**
      * getContrasena2
+     *
      * @return
      */
     public String getContrasena2() {
@@ -224,6 +249,7 @@ public class MbUsuario implements Serializable {
 
     /**
      * setContrasena2
+     *
      * @param contrasena2
      */
     public void setContrasena2(String contrasena2) {

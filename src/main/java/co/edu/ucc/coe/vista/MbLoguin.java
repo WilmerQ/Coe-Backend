@@ -11,7 +11,7 @@ import co.edu.ucc.coe.base.SessionOperations;
 import co.edu.ucc.coe.model.Usuario;
 import co.edu.ucc.coe.service.LogicaLoguin;
 import java.io.IOException;
-import javax.inject.Named;
+
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -19,7 +19,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
 
 /**
  * JSF Managed Beam encargado de la pantalla de Loguin que se encuentra en el
@@ -28,8 +30,8 @@ import javax.enterprise.context.SessionScoped;
  * @author wilme
  * @see SessionScoped
  */
-@Named(value = "mbLoguin")
 @SessionScoped
+@ManagedBean(name = "mbLoguin")
 public class MbLoguin implements Serializable {
 
     private Usuario usuario;

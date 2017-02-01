@@ -6,7 +6,9 @@
 package co.edu.ucc.coe.webService;
 
 import co.edu.ucc.coe.base.GsonExcludeListStrategy;
+import co.edu.ucc.coe.clases.Coordenadas;
 import co.edu.ucc.coe.clases.GcmObjeto;
+import co.edu.ucc.coe.clases.GcmObjetoRespuesta;
 import co.edu.ucc.coe.model.Dispositivo;
 import co.edu.ucc.coe.model.EquipoTrabajo;
 import co.edu.ucc.coe.model.Usuario;
@@ -32,6 +34,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -111,6 +114,42 @@ public class EquipoTrabajoResource {
             return new ResponseMessenger().getResponseOk("ok: " + lp.getPeticion(d.getAndroidID(), u.getNombreUsuario()).getId());
         } catch (JsonSyntaxException | IOException | NumberFormatException e) {
             return new ResponseMessenger().getResponseError("Problema interno del servidor");
+        }
+    }
+
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{respuesta}")
+    public Response RespuestaDelEquipo(@PathParam(value = "respuesta") String respuesta, @QueryParam(value = "tipo") String tipo) throws IOException {
+        System.out.println("tipo: " + tipo);
+        try {
+            Coordenadas c = new Coordenadas();
+            Gson gson = new Gson();
+            Dispositivo d = new Dispositivo();
+            Peticion p = new Peticion();
+            co.edu.ucc.coe.model.Coordenadas c1 = new co.edu.ucc.coe.model.Coordenadas();
+            c = gson.fromJson(respuesta, Coordenadas.class);
+            p = (Peticion) cb.getById(Peticion.class, c.getIdPeticion());
+            d = ld.getDispositivo(c.getIdDispostitivo(), c.getAndroidID());
+            c1.setDispositivo(d);
+            c1.setPeticion(p);
+            c1.setLatitud(c.getLatitud());
+            c1.setLongitud(c.getLongitud());
+            cb.guardar(c1);
+            
+            GcmObjetoRespuesta gcmObjetoRespuesta =  new GcmObjetoRespuesta();
+            gcmObjetoRespuesta.setIdPeticion(p.getId());
+            gcmObjetoRespuesta.setNombreGrupoTrabajo(d.getUsuario().getEquipoTrabajo().getNombreEquipo());
+            gcmObjetoRespuesta.setNombreUsuarioResponde(d.getUsuario().getNombreUsuario());
+            gcmObjetoRespuesta.setLatitud(c.getLatitud());
+            gcmObjetoRespuesta.setLongitud(c.getLongitud());
+            GcmObjeto gcmObjeto = new GcmObjeto();
+            gcmObjeto.setTipo("RespuestaPeticion");
+            gcmObjeto.setRespuesta(gcmObjetoRespuesta);
+            la.EnviarRespuesADispositivoSolicitante(gcmObjeto,p,ld.getDispositivo(p.getIDdispositivoRealizador()));
+            return new ResponseMessenger().getResponseOk("Ubicacion Trasmitida");
+        } catch (JsonSyntaxException e) {
+            return new ResponseMessenger().getResponseError("Error Interno");
         }
     }
 }

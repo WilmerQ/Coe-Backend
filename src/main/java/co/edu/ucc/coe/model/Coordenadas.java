@@ -19,8 +19,10 @@ public class Coordenadas extends CamposComunesdeEntidad implements Serializable 
 
     @ManyToOne
     private Dispositivo dispositivo;
-    private String latitud;
-    private String longitud;
+    private double latitud;
+    private double longitud;
+    @ManyToOne
+    private Peticion peticion;
 
     public Dispositivo getDispositivo() {
         return dispositivo;
@@ -30,20 +32,28 @@ public class Coordenadas extends CamposComunesdeEntidad implements Serializable 
         this.dispositivo = dispositivo;
     }
 
-    public String getLatitud() {
+    public double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(String latitud) {
+    public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
 
-    public String getLongitud() {
+    public double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(String longitud) {
+    public void setLongitud(double longitud) {
         this.longitud = longitud;
+    }
+
+    public Peticion getPeticion() {
+        return peticion;
+    }
+
+    public void setPeticion(Peticion peticion) {
+        this.peticion = peticion;
     }
 
 }

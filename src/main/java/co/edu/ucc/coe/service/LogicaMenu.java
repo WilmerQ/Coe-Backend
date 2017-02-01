@@ -6,8 +6,8 @@
 package co.edu.ucc.coe.service;
 
 import co.edu.ucc.coe.model.Usuario;
-import co.edu.ucc.coe.model.Vista;
-import co.edu.ucc.coe.model.VistasXRoll;
+import co.edu.ucc.coe.model.accesoDinamico.Vista;
+import co.edu.ucc.coe.model.accesoDinamico.VistasXRoll;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.LocalBean;

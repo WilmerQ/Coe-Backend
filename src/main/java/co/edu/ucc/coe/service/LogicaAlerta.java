@@ -7,6 +7,7 @@ package co.edu.ucc.coe.service;
 
 import co.edu.ucc.coe.base.GsonExcludeListStrategy;
 import co.edu.ucc.coe.model.Dispositivo;
+import co.edu.ucc.coe.model.Peticion;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.MulticastResult;
 import com.google.android.gcm.server.Sender;
@@ -83,4 +84,24 @@ public class LogicaAlerta {
         }
 
     }
+
+    public void EnviarRespuesADispositivoSolicitante(Object a, Peticion p, Dispositivo d) throws IOException {
+        System.out.println("Enviar EnviarRespuesADispositivoSolicitante");
+        Gson g = new GsonBuilder().setExclusionStrategies(new GsonExcludeListStrategy()).setPrettyPrinting().create();
+        String mensaje = g.toJson(a);
+        System.out.println("Json " + mensaje);
+        String ds1 = d.getTokenGoogle();
+        if (!ds1.isEmpty()) {
+            ArrayList<String> devicesList = new ArrayList<>();
+            System.out.println("EnviarRespuesADispositivoSolicitante: s1 " + ds1);
+            devicesList.add(ds1);
+            Sender sender = new Sender(GCM_API_KEY);
+            System.out.println("EnviarRespuesADispositivoSolicitante: sender" + sender.toString());
+            Message message = new Message.Builder().delayWhileIdle(true).addData(MESSAGE_KEY, mensaje).build();
+            MulticastResult result = sender.send(message, devicesList, 1);
+            System.out.println("Resultado: " + result.toString());
+            sender.send(message, devicesList, 1);
+        }
+    }
+
 }

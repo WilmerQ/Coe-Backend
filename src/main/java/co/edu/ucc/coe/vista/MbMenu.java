@@ -7,9 +7,10 @@ package co.edu.ucc.coe.vista;
 
 import co.edu.ucc.coe.base.SessionOperations;
 import co.edu.ucc.coe.model.Usuario;
-import co.edu.ucc.coe.model.Vista;
+import co.edu.ucc.coe.model.accesoDinamico.Vista;
 import co.edu.ucc.coe.service.CommonsBean;
 import co.edu.ucc.coe.service.LogicaMenu;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -26,7 +27,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ViewScoped
 @ManagedBean(name = "MbMenu")
-public class MbMenu {
+public class MbMenu implements Serializable{
 
     @EJB
     private LogicaMenu lm;

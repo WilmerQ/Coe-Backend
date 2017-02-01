@@ -125,11 +125,6 @@
             <version>1.0.8</version>
         </dependency>
         <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>6.0.4</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>fluent-hc</artifactId>
             <version>4.3.6</version>
@@ -148,6 +143,12 @@
             <groupId>com.google.gcm</groupId>
             <artifactId>gcm-server</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.4.0</version>
         </dependency>
     </dependencies>
 

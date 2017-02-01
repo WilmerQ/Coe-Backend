@@ -5,7 +5,7 @@
  */
 package co.edu.ucc.coe.service;
 
-import co.edu.ucc.coe.model.Roll;
+import co.edu.ucc.coe.model.accesoDinamico.Roll;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
