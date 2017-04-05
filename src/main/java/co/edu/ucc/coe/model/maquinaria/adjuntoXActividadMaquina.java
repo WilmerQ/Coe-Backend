@@ -6,10 +6,8 @@
 package co.edu.ucc.coe.model.maquinaria;
 
 import co.edu.ucc.coe.base.CamposComunesdeEntidad;
-import co.edu.ucc.coe.model.adjunto;
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -18,25 +16,25 @@ import javax.persistence.ManyToOne;
 @Entity
 public class adjuntoXActividadMaquina extends CamposComunesdeEntidad implements Serializable {
 
-    @ManyToOne
-    ActividadMaquina actividadMaquina;
-    @ManyToOne
-    adjunto adjunto;
+    private String idManualActividadMaquina;
+    private String idManualAdjunto;
 
-    public ActividadMaquina getActividadMaquina() {
-        return actividadMaquina;
+    public String getIdManualActividadMaquina() {
+        return idManualActividadMaquina;
     }
 
-    public void setActividadMaquina(ActividadMaquina actividadMaquina) {
-        this.actividadMaquina = actividadMaquina;
+    public void setIdManualActividadMaquina(String idManualActividadMaquina) {
+        this.idManualActividadMaquina = idManualActividadMaquina;
     }
 
-    public adjunto getAdjunto() {
-        return adjunto;
+    public String getIdManualAdjunto() {
+        return idManualAdjunto;
     }
 
-    public void setAdjunto(adjunto adjunto) {
-        this.adjunto = adjunto;
+    public void setIdManualAdjunto(String idManualAdjunto) {
+        this.idManualAdjunto = idManualAdjunto;
     }
+
+    
 
 }

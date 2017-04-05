@@ -5,11 +5,12 @@
  */
 package co.edu.ucc.coe.model.maquinaria;
 
-
 import co.edu.ucc.coe.base.CamposComunesdeEntidad;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -18,11 +19,16 @@ import javax.persistence.ManyToOne;
 @Entity
 public class ActividadMaquina extends CamposComunesdeEntidad implements Serializable {
 
+    private String idmanual;
     private String AccionxRealizar;
     private String tiempoDedicado;
     @ManyToOne
-    private TipoMaquinaria maquinaria;
+    private Maquina maquina;
     private String proyectoAsociado;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaInicio;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaDateFinal;
 
     public String getAccionxRealizar() {
         return AccionxRealizar;
@@ -40,20 +46,44 @@ public class ActividadMaquina extends CamposComunesdeEntidad implements Serializ
         this.tiempoDedicado = tiempoDedicado;
     }
 
-    public TipoMaquinaria getMaquinaria() {
-        return maquinaria;
-    }
-
-    public void setMaquinaria(TipoMaquinaria maquinaria) {
-        this.maquinaria = maquinaria;
-    }
-
     public String getProyectoAsociado() {
         return proyectoAsociado;
     }
 
     public void setProyectoAsociado(String proyectoAsociado) {
         this.proyectoAsociado = proyectoAsociado;
+    }
+
+    public Maquina getMaquina() {
+        return maquina;
+    }
+
+    public void setMaquina(Maquina maquina) {
+        this.maquina = maquina;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaDateFinal() {
+        return fechaDateFinal;
+    }
+
+    public void setFechaDateFinal(Date fechaDateFinal) {
+        this.fechaDateFinal = fechaDateFinal;
+    }
+
+    public String getIdmanual() {
+        return idmanual;
+    }
+
+    public void setIdmanual(String idmanual) {
+        this.idmanual = idmanual;
     }
 
 }

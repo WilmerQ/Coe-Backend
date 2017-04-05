@@ -10,6 +10,7 @@ import co.edu.ucc.coe.base.Md5;
 import co.edu.ucc.coe.base.SessionOperations;
 import co.edu.ucc.coe.model.Usuario;
 import co.edu.ucc.coe.service.LogicaLoguin;
+import co.edu.ucc.coe.service.LogicaVista;
 import java.io.IOException;
 
 import java.io.Serializable;
@@ -45,6 +46,8 @@ public class MbLoguin implements Serializable {
 
     @EJB
     private LogicaLoguin logicaLoguin;
+    @EJB
+    private LogicaVista lv;
 
     //Registro
     /**
@@ -62,6 +65,7 @@ public class MbLoguin implements Serializable {
      */
     @PostConstruct
     public void init() {
+        lv.ingresarVistas();
         usuario = (Usuario) SessionOperations.getSessionValue("USUARIO");
         if (usuario == null) {
             usuario = new Usuario();

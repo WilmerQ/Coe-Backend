@@ -15,8 +15,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
-import javax.faces.view.ViewScoped;
+
 
 /**
  *
@@ -48,7 +49,9 @@ public class MbMaquina implements Serializable {
         maquina = new Maquina();
         listTipoVehiculos = new LinkedList<>();
         for (TipoMaquinaria tm : (List<TipoMaquinaria>) cb.getAll(TipoMaquinaria.class)) {
-            listTipoVehiculos.add(new SelectItem(tm.getId(), tm.getNombremaquina()));
+            if(tm.getCategoriaVehiculo().equals("Vehiculo")){
+                listTipoVehiculos.add(new SelectItem(tm.getId(), tm.getNombremaquina()));
+            }
         }
         listModelos = new LinkedList<>();
         for (int i = 1950; i <= 2017; i++) {

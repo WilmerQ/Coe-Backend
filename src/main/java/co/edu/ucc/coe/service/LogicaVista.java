@@ -17,11 +17,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * EJB encargado de realizar todas las operaciones que giran entorno a la gestion de vistas
+ * EJB encargado de realizar todas las operaciones que giran entorno a la
+ * gestion de vistas
+ *
  * @author wilme
  * @see LocalBean
  * @see LocalBean
- * 
+ *
  */
 @Stateless
 @LocalBean
@@ -31,21 +33,26 @@ public class LogicaVista {
     private EntityManager em;
 
     /**
-     * metodo que permite adicionar las nuevas vistas segun se vallan creando los .Xhtml
+     * metodo que permite adicionar las nuevas vistas segun se vallan creando
+     * los .Xhtml
      */
     public void ingresarVistas() {
         GuardarVista("Mi Equipo", "gestionequipo.xhtml", "fa fa-child");
-        GuardarVista("Tipo Vehiculo", "tipomaquinaria.xhtml", "fa fa-briefcase");
+        GuardarVista("Tipo Maquina", "tipomaquinaria.xhtml", "fa fa-briefcase");
         GuardarVista("Vehiculo", "maquina.xhtml", "fa fa-car");
         GuardarVista("Actividad Vehiculos", "actividadvehiculo.xhtml", "fa fa-clock-o");
+        GuardarVista("Ver Equipos", "verequipotrabajo.xhtml", "fa fa-map-marker");
+        GuardarVista("Herramienta", "herramienta.xhtml", "fa fa-wrench");
+        GuardarVista("Alertas Informadas", "veralertas.xhtml", "fa fa-bell-o");
     }
 
     /**
      * funcion encargada de guardar las nuevas vistas
+     *
      * @param nombreVista
      * @param rutaVista
      * @param icono
-     * @return 
+     * @return
      */
     public boolean GuardarVista(String nombreVista, String rutaVista, String icono) {
         Vista v = new Vista();
@@ -68,18 +75,20 @@ public class LogicaVista {
 
     /**
      * Funcion encargada de obtener todas las vista creadas
-     * @return 
+     *
+     * @return
      */
     public List<Vista> getVistas1() {
         return em.createQuery("SELECT r FROM Vista r").getResultList();
     }
 
     /**
-     * Funcion Encargada de Obtener la VistaxRoll  Cruzando la consulta por idRoll y por el nombre de la vista
-     * lo que arroja un Boolean 
+     * Funcion Encargada de Obtener la VistaxRoll Cruzando la consulta por
+     * idRoll y por el nombre de la vista lo que arroja un Boolean
+     *
      * @param idRoll
      * @param nombre
-     * @return 
+     * @return
      */
     public Boolean getvistas(Long idRoll, String nombre) {
         List<VistaActiva> vistaActivas = new ArrayList<>();
@@ -90,12 +99,11 @@ public class LogicaVista {
             vistaActiva.setActiva(Boolean.TRUE);
             vistaActiva.setNombre(vistasXRolls.get(i).getVista().getNombre());
             vistaActivas.add(vistaActiva);
-            System.out.println("-------------------------------------");
+            /*System.out.println("-------------------------------------");
             System.out.println("elemento:" + i);
             System.out.println("nombre:" + vistaActiva.getNombre());
-            System.out.println("boolean:" + vistaActiva.getActiva());
+            System.out.println("boolean:" + vistaActiva.getActiva());*/
         }
-
         if (!vistasXRolls.isEmpty()) {
             return true;
         } else {
@@ -105,8 +113,9 @@ public class LogicaVista {
 
     /**
      * metodo encargado de Gestionar las Vistas por Roll
+     *
      * @param vistaActivas
-     * @param idRoll 
+     * @param idRoll
      */
     public void guardarVistas(List<VistaActiva> vistaActivas, Long idRoll) {
         Roll r = (Roll) em.find(Roll.class, idRoll);

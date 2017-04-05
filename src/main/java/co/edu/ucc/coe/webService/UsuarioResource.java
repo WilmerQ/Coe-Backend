@@ -13,6 +13,7 @@ import co.edu.ucc.coe.service.LogicaLoguin;
 import co.edu.ucc.coe.webService.base.ResponseMessenger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.Context;
@@ -41,9 +42,6 @@ public class UsuarioResource {
     @EJB
     private LogicaLoguin ll;
 
-    @EJB
-    private CommonsBean cb;
-
     /**
      * Constructor de clase
      */
@@ -68,12 +66,14 @@ public class UsuarioResource {
             CredencialesLoguin cl = gson.fromJson(usuario, CredencialesLoguin.class);
             Usuario u = ll.login(cl.getNombre(), cl.getContrasena());
             if (u != null) {
-                Gson g = new GsonBuilder().setExclusionStrategies(new GsonExcludeListStrategy()).setPrettyPrinting().create();
+                //Gson g = new GsonBuilder().setExclusionStrategies(new GsonExcludeListStrategy()).setPrettyPrinting().create();
+                Gson g = new GsonBuilder().setPrettyPrinting().create();
+                u.setUsuarioCreacion(null);
                 return new ResponseMessenger().getResponseOk(g.toJson(u));
             } else {
                 return new ResponseMessenger().getResponseError("Usuario y/o Contraseña incorrecto");
             }
-        } catch (Exception e) {
+        } catch (JsonSyntaxException e) {
             return new ResponseMessenger().getResponseError("Problema interno del servidor");
         }
     }

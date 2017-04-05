@@ -6,9 +6,8 @@
 package co.edu.ucc.coe.clases;
 
 import co.edu.ucc.coe.model.Peticion;
-import co.edu.ucc.coe.service.CommonsBean;
+import co.edu.ucc.coe.model.alerta.AlertaManual;
 import java.io.Serializable;
-import javax.ejb.EJB;
 
 /**
  *
@@ -19,6 +18,7 @@ public class GcmObjeto implements Serializable {
     String tipo;
     Peticion peticion;
     GcmObjetoRespuesta respuesta;
+    AlertaManualGcm alertaManualGcm;
 
     public String getTipo() {
         return tipo;
@@ -44,5 +44,12 @@ public class GcmObjeto implements Serializable {
         this.respuesta = respuesta;
     }
 
-    
+    public AlertaManualGcm getAlertaManualGcm() {
+        return alertaManualGcm;
+    }
+
+    public void setAlertaManualGcm(AlertaManualGcm alertaManualGcm) {
+        this.alertaManualGcm = alertaManualGcm;
+    }
+
 }

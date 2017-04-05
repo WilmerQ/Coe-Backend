@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      lang="es"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:include src="../css/templates/head_config.xhtml"/>
+        <title>Centro De Operaciones COE</title>
+
+        <script src="http://maps.google.com/maps/api/js?key=AIzaSyB3HLJRWsT3qkrw4MM-AS_AL7vbbOT-sis" type="text/javascript"></script>
+    </h:head>
+
+    <h:body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                <ui:include src="../css/templates/base.xhtml"/>
+
+                <!-- page content -->
+                <div class="right_col" role="main">
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Ver Ubicacion Equipo Trabajo</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <h:form role="form" prependId="false" id="form" class="form-horizontal form-label-left">
+                                    <div class="x_content">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Equipo de Trabajo:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <h:selectOneMenu value="#{MbVerEquipoTrabajo.idEquipo}" styleClass="form-control"  required="true"
+                                                                 requiredMessage="Se Debe Selecionar un Equipo">
+                                                    <f:selectItem itemLabel="Seleccione Equipo" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{MbVerEquipoTrabajo.equiposCreados}"/>
+                                                    <p:ajax event="change" listener="#{MbVerEquipoTrabajo.cargaProyecto()}"  update="form" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" align="center">
+                                            <p:gmap center="11.215008, -74.201816" zoom="12" type="TERRAIN" style="width:100%;height:600px" model="#{MbVerEquipoTrabajo.draggableModel}">
+                                                <p:ajax event="overlaySelect" listener="#{MbVerEquipoTrabajo.onMarkerSelect}" />
+                                                <p:gmapInfoWindow id="infoWindow">
+                                                    <p:outputPanel style="text-align: center; display: block; margin: auto">
+                                                        <p:outputLabel value="Usuario: "/>
+                                                        <p:outputLabel value=" #{MbVerEquipoTrabajo.marker.title}"/>
+                                                        <br />
+                                                        <p:outputLabel value="#{MbVerEquipoTrabajo.coorTemp.fechaCreacion}"/>
+                                                        <br />
+                                                        <p:outputLabel value="Usuario Que solicito Ubicacion."/>
+                                                        <br/>
+                                                        <p:outputLabel value="#{MbVerEquipoTrabajo.coorTemp.peticion.nombreUsuario}"/>
+                                                    </p:outputPanel>
+                                                </p:gmapInfoWindow>
+                                            </p:gmap>
+                                        </div>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+        </div>
+
+        <ui:include src="../css/templates/footer_scripts.xhtml"/>
+
+    </h:body>
+</html>

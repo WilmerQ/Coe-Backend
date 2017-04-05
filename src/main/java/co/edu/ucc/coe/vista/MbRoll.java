@@ -57,7 +57,7 @@ public class MbRoll implements Serializable {
         roll = new Roll();
         roles = new ArrayList<>();
         roles = cb.getAll(Roll.class);
-        lv.ingresarVistas();
+        //lv.ingresarVistas();
     }
 
     /**

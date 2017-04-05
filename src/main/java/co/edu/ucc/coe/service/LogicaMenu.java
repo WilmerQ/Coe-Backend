@@ -31,7 +31,9 @@ public class LogicaMenu {
     private EntityManager em;
 
     /**
-     * funcion que recibe un Objeto usuario y reliza la consulta de que vistas se encuentran activas para dicho usuario
+     * funcion que recibe un Objeto usuario y reliza la consulta de que vistas
+     * se encuentran activas para dicho usuario
+     *
      * @param u
      * @return
      */
@@ -39,7 +41,6 @@ public class LogicaMenu {
         try {
             List<Vista> lv = new ArrayList<>();
             List<VistasXRoll> vistasXRolls = em.createQuery("SELECT r FROM VistasXRoll r WHERE r.roll.id= :i").setParameter("i", u.getRollUsuario().getId()).getResultList();
-            System.out.println("LogicaMenu: getVistasMenuUsuario----" + vistasXRolls.size());
             for (VistasXRoll vxr : vistasXRolls) {
                 lv.addAll((List<Vista>) em.createQuery("SELECT r FROM Vista r WHERE r = :i").setParameter("i", vxr.getVista()).getResultList());
             }

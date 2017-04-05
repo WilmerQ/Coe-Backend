@@ -60,10 +60,8 @@ public class MbTipoMaquina implements Serializable {
         listaTipoConteo.add(new SelectItem("Horas"));
         listaTipoConteo.add(new SelectItem("Kilometros"));
 
-        Categorias.add(new SelectItem("Vehiculo de carga"));
-        Categorias.add(new SelectItem("Vehiculo de rescate"));
-        Categorias.add(new SelectItem("Vehiculo de apoyo"));
-        Categorias.add(new SelectItem("Trasporte de personal"));
+        Categorias.add(new SelectItem("Vehiculo"));
+        Categorias.add(new SelectItem("Herramienta con motor"));
         Categorias.add(new SelectItem("vehiculo de emergencias"));
 
         tipoCarga.add(new SelectItem("Trasporte de carga"));

@@ -71,7 +71,7 @@ public class MbVista implements Serializable {
      * vistas existentes y diga cual se encuentra activas para ese roll
      */
     public void cargarvistas() {
-        System.out.println("cargarvistas");
+        //System.out.println("cargarvistas");
         List<VistaActiva> activasTemp = new ArrayList<>();
         for (Vista v : listaVistas) {
             VistaActiva vistaActiva = new VistaActiva();
@@ -89,10 +89,10 @@ public class MbVista implements Serializable {
             }
         }
         this.vistaActivas = activasTemp1;
-        System.out.println("tamaño de lista: " + vistaActivas.size());
+        //System.out.println("tamaño de lista: " + vistaActivas.size());
         for (VistaActiva va : vistaActivas) {
-            System.out.println("Describiendo la lista: " + va.getNombre());
-            System.out.println("Describiendo la lista: " + va.getActiva());
+            //System.out.println("Describiendo la lista: " + va.getNombre());
+            //System.out.println("Describiendo la lista: " + va.getActiva());
         }
     }
 
@@ -101,10 +101,10 @@ public class MbVista implements Serializable {
      * algun cambio en los datos almacenados se encarga de realizarlos
      */
     public void accionGuardar() {
-        System.out.println("tamaño de lista AccionGuardar: " + vistaActivas.size());
+        //System.out.println("tamaño de lista AccionGuardar: " + vistaActivas.size());
         for (VistaActiva va : vistaActivas) {
-            System.out.println("Describiendo la lista AccionGuardar: " + va.getNombre());
-            System.out.println("Describiendo la lista AccionGuardar: " + va.getActiva());
+            //System.out.println("Describiendo la lista AccionGuardar: " + va.getNombre());
+            //System.out.println("Describiendo la lista AccionGuardar: " + va.getActiva());
         }
         lv.guardarVistas(vistaActivas, idRoll);
         init();
