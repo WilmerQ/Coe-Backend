@@ -40,6 +40,12 @@
                                 <div class="x_content">
                                     <br />
                                     <h:form role="formpermisos" prependId="false" id="formpermisos" class="form-horizontal form-label-left">
+                                        <h:panelGroup id="growl-total">
+                                            <p:growl id="growl-info" showDetail="true"  rendered="#{facesContext.maximumSeverity.ordinal eq 0}"/> 
+                                            <p:growl id="growl-warn" showDetail="true"  rendered="#{facesContext.maximumSeverity.ordinal eq 1}"/> 
+                                            <p:growl id="growl-error" showDetail="true"  rendered="#{facesContext.maximumSeverity.ordinal eq 2}"/> 
+                                            <p:growl id="growl-fatal" showDetail="true" rendered="#{facesContext.maximumSeverity.ordinal eq 3}"/> 
+                                        </h:panelGroup>
                                         <div class="form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Usuario: <span class="required">*</span>
                                             </label>

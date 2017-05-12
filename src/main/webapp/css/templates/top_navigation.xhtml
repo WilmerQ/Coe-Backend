@@ -23,16 +23,18 @@ and open the template in the editor.
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="/coe/css/production/images/img.jpg" alt=""/><p:outputLabel value="#{mbLoguin.usuario.nombreUsuario}" />
+                                <img src="http://#{MbDatosBasicos.ip}:8080/coe/imagenperfilservlet?id=#{mbLoguin.usuario.id}" alt=""/><p:outputLabel value="#{mbLoguin.usuario.nombreUsuario}" />
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;"> Modificar datos personales</a></li>
-                                <li><h:form>
+                                <li><a href="/coe/usuario/perfil.xhtml"> Modificar datos personales</a></li>
+                                <li>
+                                    <h:form>
                                         <h:commandLink styleClass="fa" action="#{mbLoguin.accionLogout()}" value="Cerrar Sesion" >
                                             <i class="fa fa-sign-out pull-right"></i>
                                         </h:commandLink>
-                                    </h:form> </li>
+                                    </h:form>
+                                </li>
                             </ul>
                         </li>
                     </ul>

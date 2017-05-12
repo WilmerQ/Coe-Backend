@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      lang="es"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:include src="../css/templates/head_config.xhtml"/>
+        <title>Centro De Operaciones de Santa Marta - COE</title>
+    </h:head>
+
+    <h:body class="nav-md">
+
+        <div class="container body">
+            <div class="main_container">
+                <ui:include src="../css/templates/base.xhtml"/>
+
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <span class="section">Personas para Notificar</span>
+                                <div class="x_content">
+                                    <h:form role="form"  id="form" class="form-horizontal form-label-left">
+                                        <p:growl id="growl" showDetail="true" sticky="true" />
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Entidad:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <p:inputText id="entidad" type="text" styleClass="form-control col-md-7 col-xs-12" value="#{MbNotificaciones.usuarioNotificar.entidad}"/>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nombres:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <p:inputText id="nombres" type="text" styleClass="form-control col-md-7 col-xs-12" value="#{MbNotificaciones.usuarioNotificar.nombres}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Cargo:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <p:inputText id="cargo" type="text" styleClass="form-control col-md-7 col-xs-12" value="#{MbNotificaciones.usuarioNotificar.cargo}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Correo Electrónico:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <p:inputText id="email" type="email" styleClass="form-control col-md-7 col-xs-12" value="#{MbNotificaciones.usuarioNotificar.email}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Telefono:<span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <p:inputText id="telefono" type="number" styleClass="form-control col-md-7 col-xs-12" value="#{MbNotificaciones.usuarioNotificar.telefono}"/>
+                                            </div>
+                                        </div>
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group" align="center">
+                                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                <p:commandButton  value="Limpiar" update=":form" styleClass="btn btn-warning" actionListener="#{MbNotificaciones.init()}" />    
+                                                <p:commandButton  value="Guardar" update=":form :form2" styleClass="btn btn-success" actionListener="#{MbNotificaciones.accionGuarda()}" />    
+                                            </div>
+                                        </div>
+                                    </h:form>
+
+                                    <h:form role="form2" id="form2" prependId="false" class="form-horizontal form-label-left">
+                                        <div class="form-group" align="center">
+                                            <p:dataTable id="tablaUsuariosNotificar" value="#{MbNotificaciones.usuarioNotificars}" resizableColumns="true" var="row" paginator="true" 
+                                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                                         rows="10" paginatorPosition="top">
+                                                <f:facet name="header">
+                                                    <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />
+                                                    <p:columnToggler datasource="tablaUsuariosNotificar" trigger="toggler" />
+                                                </f:facet>
+                                                <p:column headerText="Entidad">
+                                                    <p:outputLabel value="#{row.entidad}" />
+                                                </p:column>
+                                                <p:column headerText="Nombres">
+                                                    <p:outputLabel value="#{row.nombres}" />
+                                                </p:column>
+                                                <p:column headerText="Cargo">
+                                                    <p:outputLabel value="#{row.cargo}" />
+                                                </p:column>
+                                                <p:column headerText="Email">
+                                                    <p:outputLabel value="#{row.email}" />
+                                                </p:column>
+                                                <p:column headerText="Telefono" style="width: 100px">
+                                                    <p:outputLabel value="#{row.telefono}" />
+                                                </p:column>
+                                                <p:column style="width: 30px">
+                                                    <p:commandLink id="editar" action="#{MbNotificaciones.cargarUsuarioNotificar(row)}" update=":form">
+                                                        <span class="fa fa-edit"/>
+                                                    </p:commandLink>
+                                                </p:column>
+                                            </p:dataTable> 
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+            </div>
+        </div>
+
+        <ui:include src="../css/templates/footer_scripts.xhtml"/>
+
+    </h:body>
+</html>
+

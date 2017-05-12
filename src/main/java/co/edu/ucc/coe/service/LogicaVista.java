@@ -38,12 +38,14 @@ public class LogicaVista {
      */
     public void ingresarVistas() {
         GuardarVista("Mi Equipo", "gestionequipo.xhtml", "fa fa-child");
-        GuardarVista("Tipo Maquina", "tipomaquinaria.xhtml", "fa fa-briefcase");
-        GuardarVista("Vehiculo", "maquina.xhtml", "fa fa-car");
-        GuardarVista("Actividad Vehiculos", "actividadvehiculo.xhtml", "fa fa-clock-o");
+        //GuardarVista("Tipo Maquina", "tipomaquinaria.xhtml", "fa fa-briefcase");
+        //GuardarVista("Vehiculo", "maquina.xhtml", "fa fa-car");
+        //GuardarVista("Actividad Vehiculos", "actividadvehiculo.xhtml", "fa fa-clock-o");
         GuardarVista("Ver Equipos", "verequipotrabajo.xhtml", "fa fa-map-marker");
-        GuardarVista("Herramienta", "herramienta.xhtml", "fa fa-wrench");
+        //GuardarVista("Herramienta", "herramienta.xhtml", "fa fa-wrench");
         GuardarVista("Alertas Informadas", "veralertas.xhtml", "fa fa-bell-o");
+        GuardarVista("Notificaciones", "gestionnotificacion.xhtml", "fa fa-envelope");
+        GuardarVista("Niveles del Rio", "gestion_modelo.xhtml", "fa fa-line-chart");
     }
 
     /**

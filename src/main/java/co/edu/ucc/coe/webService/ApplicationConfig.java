@@ -32,6 +32,7 @@ public class ApplicationConfig extends Application {
         resources.add(co.edu.ucc.coe.webService.AuxiliarResource.class);
         resources.add(co.edu.ucc.coe.webService.DispositivoResource.class);
         resources.add(co.edu.ucc.coe.webService.EquipoTrabajoResource.class);
+        resources.add(co.edu.ucc.coe.webService.RecicibirDatosSipnatResource.class);
         resources.add(co.edu.ucc.coe.webService.UsuarioResource.class);
         resources.add(co.edu.ucc.coe.webService.loguinResource.class);
     }

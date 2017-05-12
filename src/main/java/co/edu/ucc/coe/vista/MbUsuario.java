@@ -17,6 +17,8 @@ import java.io.Serializable;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -46,6 +48,7 @@ public class MbUsuario implements Serializable {
     private Usuario usuario;
     private String contrasena1;
     private String contrasena2;
+    private UUID id;
 
     /**
      * Constructor de la clase
@@ -64,6 +67,15 @@ public class MbUsuario implements Serializable {
         usuario = new Usuario();
         contrasena1 = "";
         contrasena2 = "";
+        id = UUID.randomUUID();
+    }
+
+    public boolean validateEmail(String email) {
+        String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(PATTERN_EMAIL);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     /**
@@ -116,13 +128,10 @@ public class MbUsuario implements Serializable {
 
         if (usuario.getEmail().trim().length() == 0) {
             resultado = Boolean.FALSE;
-            mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "Agregue Email");
-        } else {
-            String[] campos = usuario.getEmail().split(" ");
-            if (campos.length > 1) {
-                resultado = Boolean.FALSE;
-                mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "El campo email no permite espacio");
-            }
+            mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "Agregue Correo Electronico");
+        } else if (!(validateEmail(usuario.getEmail()))) {
+            resultado = Boolean.FALSE;
+            mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "Formato de Correo Electronico no admitido");
         }
 
         if (usuario.getTelefono().trim().length() == 0) {
@@ -160,7 +169,6 @@ public class MbUsuario implements Serializable {
     }
 
     public void handleFileUpload(FileUploadEvent event) {
-        UUID id = UUID.randomUUID();
         try {
             System.out.println("aqui estoy");
             InputStream fi;
@@ -169,6 +177,7 @@ public class MbUsuario implements Serializable {
             fi.read(buffer);
             usuario.setImagenperfil(buffer);
             SessionOperations.setSessionValue(id.toString().toUpperCase(), buffer);
+            System.out.println("id ---- " + id.toString());
         } catch (IOException ex) {
             Logger.getLogger(MbUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -254,6 +263,14 @@ public class MbUsuario implements Serializable {
      */
     public void setContrasena2(String contrasena2) {
         this.contrasena2 = contrasena2;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
 }

@@ -9,24 +9,29 @@ import co.edu.ucc.coe.base.DatosBasicos;
 import co.edu.ucc.coe.base.Md5;
 import co.edu.ucc.coe.base.SessionOperations;
 import co.edu.ucc.coe.model.Usuario;
+import co.edu.ucc.coe.service.CommonsBean;
 import co.edu.ucc.coe.service.LogicaLoguin;
 import co.edu.ucc.coe.service.LogicaVista;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.io.Serializable;
+import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
+import org.primefaces.event.FileUploadEvent;
 
 /**
  * JSF Managed Beam encargado de la pantalla de Loguin que se encuentra en el
- * index.xhtml 
+ * index.xhtml
  *
  * @author wilme
  * @see SessionScoped
@@ -44,10 +49,19 @@ public class MbLoguin implements Serializable {
     private String nombreDeUsuaio;
     private String password;
 
+    //actualizar datos
+    private Boolean actualizarImagenPerfil;
+    private Boolean actualzarPass;
+    private String passActual;
+    private String passNueva;
+    private String passConfirmar;
+
     @EJB
     private LogicaLoguin logicaLoguin;
     @EJB
     private LogicaVista lv;
+    @EJB
+    private CommonsBean cb;
 
     //Registro
     /**
@@ -65,6 +79,8 @@ public class MbLoguin implements Serializable {
      */
     @PostConstruct
     public void init() {
+        actualizarImagenPerfil = Boolean.FALSE;
+        actualzarPass = Boolean.FALSE;
         lv.ingresarVistas();
         usuario = (Usuario) SessionOperations.getSessionValue("USUARIO");
         if (usuario == null) {
@@ -120,6 +136,56 @@ public class MbLoguin implements Serializable {
         return null;
     }
 
+    public String accionActualizar() throws Exception {
+        if (verificarFormulario()) {
+            Boolean actualizar = Boolean.FALSE;
+            Usuario usuario1 = (Usuario) cb.getById(Usuario.class, usuario.getId());
+            if (usuario1 != null) {
+                System.out.println("email usuario1 " + usuario1.getEmail());
+                System.out.println("email usuario " + usuario.getEmail());
+                System.out.println("telefono usuario1 " + usuario1.getTelefono());
+                System.out.println("telefono usuario " + usuario.getTelefono());
+                if ((!(usuario1.getEmail().equals(usuario.getEmail())))
+                        || (!(usuario1.getTelefono().equals(usuario.getTelefono())))) {
+                    actualizar = Boolean.TRUE;
+                }
+                try {
+                    if (usuario1.getImagenperfil().length != usuario.getImagenperfil().length) {
+                        actualizar = Boolean.TRUE;
+                    }
+                } catch (Exception e) {
+                    actualizar = Boolean.TRUE;
+                }
+
+                System.out.println("actualizar " + actualizar);
+                if (actualzarPass) {
+                    if (usuario1.getContrasena().equals(Md5.getEncoddedString(passActual))) {
+                        if (passNueva.equals(passConfirmar)) {
+                            usuario.setContrasena(Md5.getEncoddedString(passConfirmar));
+                            actualizar = Boolean.TRUE;
+                        } else {
+                            mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "Revisar contraseñas nuevas no coinciden");
+                        }
+                    } else {
+                        mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "Contraseña actual no coincide con su contraseña");
+                    }
+                }
+            }
+            if (actualizar) {
+                if (cb.guardar(usuario)) {
+                    mostrarMensaje(FacesMessage.SEVERITY_INFO, "Exitoso", "Se ha Actualizado");
+                    accionLogout();
+                    //SessionOperations.setSessionValue("USUARIO", usuario);
+                } else {
+                    mostrarMensaje(FacesMessage.SEVERITY_FATAL, "Error", "Ha fallado al Guardar");
+                }
+            } else {
+                mostrarMensaje(FacesMessage.SEVERITY_FATAL, "Error", "No se detectaron cambios");
+            }
+        }
+        return null;
+    }
+
     /**
      * Funcion tipo accion las cual es llamada desde un event del un html en
      * esta acion se realiza el proceso de cierre se sesion lo que se realiza es
@@ -142,6 +208,87 @@ public class MbLoguin implements Serializable {
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Salida", "Se ha cerrado la sesion correctamente"));
         redirect(DatosBasicos.path);
         return null;
+    }
+
+    public Boolean verificarFormulario() throws Exception {
+        Boolean resultado = Boolean.TRUE;
+        if (usuario.getEmail().trim().length() == 0) {
+            resultado = Boolean.FALSE;
+            mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "Agregue Correo Electronico");
+        } else if (!(validateEmail(usuario.getEmail()))) {
+            resultado = Boolean.FALSE;
+            mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "Formato de Correo Electronico no admitido");
+        }
+
+        if (usuario.getTelefono().trim().length() == 0) {
+            resultado = Boolean.FALSE;
+            mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "Agregue Telefono");
+        } else {
+            String[] campos = usuario.getTelefono().split(" ");
+            if (campos.length > 1) {
+                resultado = Boolean.FALSE;
+                mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "El campo telefono no permite espacio");
+            }
+        }
+
+        if (actualzarPass) {
+            if (passActual.trim().length() == 0) {
+                resultado = Boolean.FALSE;
+                mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "Agregue Contraseña actual");
+            } else {
+                String[] campos = passActual.split(" ");
+                if (campos.length > 1) {
+                    resultado = Boolean.FALSE;
+                    mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "El campo Contraseña actual no permite espacio");
+                }
+            }
+            if (passNueva.trim().length() == 0) {
+                resultado = Boolean.FALSE;
+                mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "Agregue la nueva Contraseña");
+            } else {
+                String[] campos = passNueva.split(" ");
+                if (campos.length > 1) {
+                    resultado = Boolean.FALSE;
+                    mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "El campo nueva Contraseña no permite espacio");
+                }
+            }
+
+            if (passConfirmar.trim().length() == 0) {
+                resultado = Boolean.FALSE;
+                mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "Agregue Confirmar Contraseña");
+            } else {
+                String[] campos = passConfirmar.split(" ");
+                if (campos.length > 1) {
+                    resultado = Boolean.FALSE;
+                    mostrarMensaje(FacesMessage.SEVERITY_ERROR, "ERROR", "El campo Confirmar Contraseña no permite espacio");
+                }
+            }
+        }
+        return resultado;
+    }
+
+    public boolean validateEmail(String email) {
+        String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(PATTERN_EMAIL);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+        UUID id = UUID.randomUUID();
+        try {
+            System.out.println("aqui estoy");
+            InputStream fi;
+            fi = event.getFile().getInputstream();
+            byte[] buffer = new byte[(int) event.getFile().getSize()];
+            fi.read(buffer);
+            usuario.setImagenperfil(buffer);
+            SessionOperations.setSessionValue(id.toString().toUpperCase(), buffer);
+            actualizarImagenPerfil = Boolean.FALSE;
+        } catch (IOException ex) {
+            Logger.getLogger(MbUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -223,6 +370,51 @@ public class MbLoguin implements Serializable {
      */
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Boolean getActualzarPass() {
+        return actualzarPass;
+    }
+
+    public void setActualzarPass(Boolean actualzarPass) {
+        if (actualzarPass == Boolean.FALSE) {
+            passActual = "";
+            passNueva = "";
+            passConfirmar = "";
+        }
+        this.actualzarPass = actualzarPass;
+    }
+
+    public String getPassActual() {
+        return passActual;
+    }
+
+    public void setPassActual(String passActual) {
+        this.passActual = passActual;
+    }
+
+    public String getPassNueva() {
+        return passNueva;
+    }
+
+    public void setPassNueva(String passNueva) {
+        this.passNueva = passNueva;
+    }
+
+    public String getPassConfirmar() {
+        return passConfirmar;
+    }
+
+    public void setPassConfirmar(String passConfirmar) {
+        this.passConfirmar = passConfirmar;
+    }
+
+    public Boolean getActualizarImagenPerfil() {
+        return actualizarImagenPerfil;
+    }
+
+    public void setActualizarImagenPerfil(Boolean actualizarImagenPerfil) {
+        this.actualizarImagenPerfil = actualizarImagenPerfil;
     }
 
 }

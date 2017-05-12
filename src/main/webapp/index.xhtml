@@ -47,7 +47,8 @@ and open the template in the editor.
                     <section class="login_content">
                         <h:form id="form">
                             <p:growl id="growl" showDetail="true" />
-                            <h1>Iniciar sesión</h1>
+                            <h1>COE</h1>
+                            <span class="section">Gestión del Riesgo</span>
                             <div>
                                 <p:inputText type="text" styleClass="form-control" placeholder="Nombre Usuario" value="#{mbLoguin.nombreDeUsuaio}" style="width: 100%"/>
                             </div>
@@ -58,16 +59,24 @@ and open the template in the editor.
                                 <p:commandButton  value="Entrar"  update=":form growl-total" actionListener="#{mbLoguin.accionLogin()}" styleClass="btn btn-default submit" />    
                                 <a class="reset_pass" href="olvidocontrasena.xhtml">Olvidaste tu contraseña?</a>
                             </div>
-
-                            <div class="clearfix"></div>
-
                             <div class="separator">
                                 <p class="change_link">Nuevo en el sitio?
                                     <a href="#signup" class="to_register"> Crear Cuenta </a>
                                 </p>
-
-                                <div class="clearfix"></div>
-                                <br />
+                            </div>
+                            <div class="clearfix"></div>
+                            <div>
+                                <!--<span class="section">Financiado por</span>-->
+                                <h:panelGrid columns="2">
+                                    <h:column>
+                                        <p:graphicImage url="http://www.colciencias.gov.co/sites/default/files/logo_0.png" 
+                                                        style="width: 204px; height: 43px"/>
+                                    </h:column>
+                                    <h:column>
+                                        <p:graphicImage url="http://clinicaucc.com.co/images/ucc.png" 
+                                                        style="width: 150px; height: 50px"/>
+                                    </h:column>
+                                </h:panelGrid>
                             </div>
                         </h:form>
                     </section>
@@ -98,26 +107,18 @@ and open the template in the editor.
                                           dragDropSupport="false"  
                                           mode="advanced"
                                           multiple="false" 
-                                          auto="true"
                                           label="Seleccione Foto Perfil"
                                           allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
                                           cancelLabel="Cancelar"
-                                          uploadLabel="Subir Archivos"
-                                          update=":form-graf">
+                                          uploadLabel="Subir">
                             </p:fileUpload>
-                        </h:form>
-                        <h:form id="form-graf">
-                            <p:graphicImage id="graf" rendered="#{MbUsuario.usuario.imagenperfil != null}"
-                                            url="http://www.planwallpaper.com/static/images/desktop-year-of-the-tiger-images-wallpaper.jpg"
-                                            style="width: 59px; height:80px" /> 
+
                             <div>
                                 <br/>
-                                <p:commandButton  value="Enviar"  update=":form2 growl-total" actionListener="#{mbUsuario.accionGuarda()}" styleClass="btn btn-default submit" />    
+                                <p:commandButton  value="Enviar"  update=":form2 growl-total" actionListener="#{MbUsuario.accionGuarda()}" styleClass="btn btn-default submit" />    
                             </div>
                         </h:form>
-
                         <div class="clearfix"></div>
-
                         <div class="separator">
                             <p class="change_link">Already a member ?
                                 <a href="#signin" class="to_register"> Iniciar sesión</a>

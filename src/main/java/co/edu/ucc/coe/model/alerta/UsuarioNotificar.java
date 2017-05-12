@@ -16,16 +16,26 @@ import javax.persistence.Entity;
 @Entity
 public class UsuarioNotificar extends CamposComunesdeEntidad implements Serializable {
 
-    private String nombre;
+    private String nombres;
+    private String cargo;
     private String Email;
     private String Entidad;
+    private String telefono;
 
-    public String getNombre() {
-        return nombre;
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
     public String getEmail() {
@@ -43,6 +53,13 @@ public class UsuarioNotificar extends CamposComunesdeEntidad implements Serializ
     public void setEntidad(String Entidad) {
         this.Entidad = Entidad;
     }
-    
-    
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
 }

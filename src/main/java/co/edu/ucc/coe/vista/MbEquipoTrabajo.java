@@ -61,7 +61,7 @@ public class MbEquipoTrabajo implements Serializable {
         usuarioXEquipo = new ArrayList<>();
         usuarioXEquipo = lu.getUsuariosConEquipoTrabajo(u.getNombreUsuario());
         equipoTrabajo = new EquipoTrabajo();
-        
+
         equipoTrabajos = new ArrayList<>();
         equipoTrabajosXUsuario = new ArrayList<>();
         equipoTrabajos = cb.getAll(EquipoTrabajo.class);
@@ -103,7 +103,7 @@ public class MbEquipoTrabajo implements Serializable {
             init();
         }
     }
-    
+
     public void Cargar(Usuario usu) {
         this.idUsuario = usu.getId();
         this.idEquipo = usu.getEquipoTrabajo().getId();
@@ -113,7 +113,6 @@ public class MbEquipoTrabajo implements Serializable {
 
     public void cargarEquipo(EquipoTrabajo row) {
         this.equipoTrabajo = row;
-
     }
 
     public void mostrarMensaje(FacesMessage.Severity icono, String titulo, String mensaje) {

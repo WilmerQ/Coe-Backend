@@ -9,6 +9,7 @@ import co.edu.ucc.coe.clases.AlertaManual;
 import co.edu.ucc.coe.service.CommonsBean;
 import co.edu.ucc.coe.service.LogicaAlerta;
 import co.edu.ucc.coe.service.LogicaEmailAdjunto;
+import co.edu.ucc.coe.service.reporte.LogicaReporteAlerta;
 import co.edu.ucc.coe.webService.base.ResponseMessenger;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -55,6 +56,8 @@ public class AuxiliarResource {
     private LogicaAlerta la;
     @EJB
     private LogicaEmailAdjunto le;
+    @EJB
+    private LogicaReporteAlerta logicaReporteAlerta;
 
     /**
      * Creates a new instance of AuxiliarResource
@@ -318,11 +321,12 @@ public class AuxiliarResource {
             }
 
             if (cb.guardar(alertaManual)) {
-                //la.InformarAlertaManual(alertaManual);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        //la.InformarAlertaManual(alertaManual);
                         le.EnviarEmail();
+                        logicaReporteAlerta.generarReporte();
                     }
                 }).start();
 

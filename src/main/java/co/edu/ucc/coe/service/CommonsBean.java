@@ -6,6 +6,7 @@ package co.edu.ucc.coe.service;
 
 import co.edu.ucc.coe.base.CamposComunesdeEntidad;
 import co.edu.ucc.coe.base.FieldtoQuery;
+import java.io.Serializable;
 
 import java.util.List;
 import javax.ejb.Stateless;
@@ -21,7 +22,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class CommonsBean {
+public class CommonsBean implements Serializable{
 
     @PersistenceContext(unitName = "COEPU")
     private EntityManager em;
@@ -80,7 +81,7 @@ public class CommonsBean {
         String nombreClase = o.getSimpleName();
         try {
             return em.createQuery("Select o from " + nombreClase + " o where o." + campo + "= :v").setParameter("v", value).getSingleResult();
-        } catch (NoResultException nre) {
+        } catch (Exception e) {
             return null;
         }
     }
