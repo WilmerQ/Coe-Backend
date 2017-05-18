@@ -22,10 +22,35 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel">
-                                <span class="section">Mis Datos Personales</span>
+                                <span class="section">Rangos de Niveles de Proyecto por Sensor</span>
                                 <div class="x_content">
                                     <h:form role="form"  id="form" class="form-horizontal form-label-left">
                                         <p:growl id="growl" showDetail="true" sticky="true" />
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Proyecto: <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <h:selectOneMenu value="#{MbNivelesProyectoXSenor.idProyecto}" styleClass="form-control" required="true" requiredMessage="Se Debe Selecionar un proyecto">
+                                                    <f:selectItem itemLabel="Selecione proyecto" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{MbNivelesProyectoXSenor.listaProyecto}"/>
+                                                    <f:ajax event="change" execute="@form" render=":form :fragmenttipo"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <ui:fragment rendered="#{MbNivelesProyectoXSenor.proyectoSelecionado == true}" id="fragmenttipo">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tipo de Sensor: <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <h:selectOneMenu value="#{MbNivelesProyectoXSenor.idTipoSensor}" styleClass="form-control" id="tiposensor">
+                                                        <f:selectItem itemLabel="Selecione Tipo Sensor" itemValue="" noSelectionOption="true" />
+                                                        <f:selectItems value="#{MbNivelesProyectoXSenor.listaTiposSensoresProyecto}"/>
+                                                        <f:ajax event="change" execute="@form" render=":form"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                        </ui:fragment>
+                                        
                                     </h:form>
                                 </div>
                             </div>
@@ -37,5 +62,3 @@
         <ui:include src="../css/templates/footer_scripts.xhtml"/>
     </h:body>
 </html>
-
-`

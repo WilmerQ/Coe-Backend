@@ -10,6 +10,7 @@ import co.edu.ucc.coe.model.alerta.proyectoSensado;
 import co.edu.ucc.coe.service.CommonsBean;
 import co.edu.ucc.coe.service.alerta.LogicaAlerta;
 import co.edu.ucc.coe.sipnat.clases.Dato;
+import co.edu.ucc.coe.sipnat.clases.TipoSensor;
 import co.edu.ucc.coe.webService.base.ResponseMessenger;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -27,7 +28,6 @@ import javax.ws.rs.core.Response;
 import java.lang.reflect.Type;
 import java.util.Date;
 import javax.ejb.EJB;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 
@@ -37,8 +37,9 @@ import javax.ejb.Stateless;
  * @author wilme
  */
 @Path("RecicibirDatosSipnat")
-@Stateful
-@LocalBean
+//@Stateful
+//@LocalBean
+@Stateless
 public class RecicibirDatosSipnatResource {
 
     @Context
@@ -59,12 +60,13 @@ public class RecicibirDatosSipnatResource {
      * co.edu.ucc.coe.webService.RecicibirDatosSipnatResource
      *
      * @param datos
+     * @param tipos
      * @return an instance of java.lang.String
      */
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{datos}")
-    public Response RecibirDatos(@PathParam("datos") String datos) throws Exception {
+    @Path("/{datos}/{tipos}")
+    public Response RecibirDatos(@PathParam("datos") String datos, @PathParam("tipos") String tipos) {
         try {
             Gson gson = new Gson();
             Dato temp = new Dato();
@@ -72,6 +74,35 @@ public class RecicibirDatosSipnatResource {
             Type listType = new TypeToken<ArrayList<Dato>>() {
             }.getType();
             datosRecibidos = new Gson().fromJson(datos, listType);
+            List<TipoSensor> tiposSensor = new ArrayList<>();
+            Type listType2 = new TypeToken<ArrayList<TipoSensor>>() {
+            }.getType();
+            tiposSensor = new Gson().fromJson(tipos, listType2);
+            System.out.println("tiposensor " + tiposSensor.size());
+            if (tiposSensor.size() > 0) {
+                for (TipoSensor ts : tiposSensor) {
+                    if (logicaAlerta.tiposSensorExitentes()) {
+                        System.out.println("tipos de sensor" + ts.getNombre() + " -- " + ts.getUnidadDeMedida());
+                        List<co.edu.ucc.coe.model.alerta.TipoSensor> list = cb.getByOneField(co.edu.ucc.coe.model.alerta.TipoSensor.class, "idNativo", ts.getId());
+                        if (list.size() > 0) {
+                            System.out.println("ya existe el tipo de sensor");
+                        } else {
+                            co.edu.ucc.coe.model.alerta.TipoSensor ts1 = new co.edu.ucc.coe.model.alerta.TipoSensor();
+                            ts1.setIdNativo(ts.getId());
+                            ts1.setNombre(ts.getNombre());
+                            ts1.setUnidadDeMedida(ts.getUnidadDeMedida());
+                            cb.guardar(ts1);
+                        }
+                    } else {
+                        System.out.println("no existe ningun tipo de sensor - se guardara el primero");
+                        co.edu.ucc.coe.model.alerta.TipoSensor ts1 = new co.edu.ucc.coe.model.alerta.TipoSensor();
+                        ts1.setIdNativo(ts.getId());
+                        ts1.setNombre(ts.getNombre());
+                        ts1.setUnidadDeMedida(ts.getUnidadDeMedida());
+                        cb.guardar(ts1);
+                    }
+                }
+            }
             List<String> estadosTemp = new ArrayList<>();
             for (Dato d : datosRecibidos) {
                 System.out.println("-" + d.getSensor().getProyectoPadre().getNombre());

@@ -6,10 +6,13 @@
 package co.edu.ucc.coe.service.alerta;
 
 import co.edu.ucc.coe.model.alerta.HistoricoEstadoAlerta;
+import co.edu.ucc.coe.model.alerta.TipoSensor;
 import co.edu.ucc.coe.model.alerta.proyectoSensado;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.Local;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +21,8 @@ import javax.persistence.PersistenceContext;
  *
  * @author wilme
  */
-@Stateless
+//@Stateless
+@Stateful
 @LocalBean
 public class LogicaAlerta implements Serializable {
 
@@ -56,6 +60,20 @@ public class LogicaAlerta implements Serializable {
                 return Boolean.FALSE;
             } else {
                 System.out.println("proyectosExitentes " + proyectos.size());
+                return Boolean.TRUE;
+            }
+        } catch (Exception e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    public Boolean tiposSensorExitentes() {
+        try {
+            List<TipoSensor> tipos = (List<TipoSensor>) em.createQuery("SELECT t FROM TipoSensor t").getResultList();
+            if (tipos.isEmpty()) {
+                return Boolean.FALSE;
+            } else {
+                System.out.println("tipos existentes " + tipos.size());
                 return Boolean.TRUE;
             }
         } catch (Exception e) {
